@@ -446,7 +446,7 @@
           "workingDirectoryOrdinal": 0
         },
         {
-          "src": "/home/matt/Desktop/TapBlazeTest/TestGame/Classes/HelloWorldScene.cpp",
+          "src": "/home/matt/Desktop/TapBlazeTest/TestGame/Classes/SpinnerScene.cpp",
           "flagsOrdinal": 1,
           "workingDirectoryOrdinal": 0
         },
@@ -462,7 +462,7 @@
           "workingDirectoryOrdinal": 0
         },
         {
-          "header": "/home/matt/Desktop/TapBlazeTest/TestGame/Classes/HelloWorldScene.h",
+          "header": "/home/matt/Desktop/TapBlazeTest/TestGame/Classes/SpinnerScene.h",
           "workingDirectoryOrdinal": 0
         }
       ],

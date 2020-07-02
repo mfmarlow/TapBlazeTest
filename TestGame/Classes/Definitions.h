@@ -1,0 +1,14 @@
+//Definitions
+
+#define ROTATION_TIME 3.0f
+#define ROTATION_ANGLE 3600.0f
+#define BUTTON_TRANSITION_TIME 0.1f
+#define EASING_RATE 2.0f
+#define ANGLE_SECTOR_1 22.5f
+#define ANGLE_SECTOR_2 67.5f
+#define ANGLE_SECTOR_3 112.5f
+#define ANGLE_SECTOR_4 157.5f
+#define ANGLE_SECTOR_5 202.5f
+#define ANGLE_SECTOR_6 247.5f
+#define ANGLE_SECTOR_7 292.5f
+#define ANGLE_SECTOR_8 337.5f
