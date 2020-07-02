@@ -36,18 +36,20 @@ using namespace cocos2d::ui;
 
 class SpinnerScene : public Scene
 {
-    public:
-        static Scene* createScene();
+public:
+    static Scene *createScene();
 
-        virtual bool init();
+    virtual bool init();
 
-        // implement the "static create()" method manually
-        CREATE_FUNC(SpinnerScene);
-    private:
-        cocos2d::Sprite *sectors;
-        void touchEvent(Ref* sender, Widget::TouchEventType type);
-        float getGoalAngle();
+    // implement the "static create()" method manually
+    CREATE_FUNC(SpinnerScene);
 
+private:
+    cocos2d::Sprite *sectors;
+    cocos2d::Sprite *arrow;
+    cocos2d::Sprite *border;
+    void touchEvent(Ref *sender, Widget::TouchEventType type);
+    float getGoalAngle();
 };
 
 #endif // __SPINNER_SCENE_H__
