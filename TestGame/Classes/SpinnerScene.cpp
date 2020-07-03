@@ -64,69 +64,69 @@ bool SpinnerScene::init()
 	float wheel_width = sectors->getBoundingBox().size.width;
 	float wheel_height = sectors->getBoundingBox().size.height;
 
-	//Sector 1 Sprite - HAMMERx1
+	//Sector 1 Sprite - LIFEx30
 	sprite_1 = Sprite::create(SPRITE_SECTOR_1);
 	rewards[0] = sprite_1;
 	sectors->addChild(sprite_1, 1);
-	sprite_1->setPosition(Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_4));
+	sprite_1->setPosition(Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_4));
 	sprite_1->setRotation(-ANGLE_SECTOR_1);
 	addLabelWithQuantity(sprite_1, QTY_SECTOR_1);
 
-	//Sector 2 Sprite - GEMx75
+	//Sector 2 Sprite - BRUSHx3
 	sprite_2 = Sprite::create(SPRITE_SECTOR_2);
 	rewards[1] = sprite_2;
 	sectors->addChild(sprite_2, 1);
-	sprite_2->setPosition(Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_3));
+	sprite_2->setPosition(Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_3));
 	sprite_2->setRotation(-ANGLE_SECTOR_2);
 	addLabelWithQuantity(sprite_2, QTY_SECTOR_2);
 
-	//Sector 3 Sprite - BRUSHx1
+	//Sector 3 Sprite - GEMSx35
 	sprite_3 = Sprite::create(SPRITE_SECTOR_3);
 	rewards[2] = sprite_3;
 	sectors->addChild(sprite_3, 1);
-	sprite_3->setPosition(Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_2));
+	sprite_3->setPosition(Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_2));
 	sprite_3->setRotation(-ANGLE_SECTOR_3);
 	sprite_3->setScale(0.8f);
 	addLabelWithQuantity(sprite_3, QTY_SECTOR_3);
 
-	//Sector 4 Sprite - COINSx750
+	//Sector 4 Sprite - HAMMERx3
 	sprite_4 = Sprite::create(SPRITE_SECTOR_4);
 	rewards[3] = sprite_4;
 	sectors->addChild(sprite_4, 1);
-	sprite_4->setPosition(Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_1));
+	sprite_4->setPosition(Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_1));
 	sprite_4->setRotation(-ANGLE_SECTOR_4);
 	addLabelWithQuantity(sprite_4, QTY_SECTOR_4);
 
-	//Sector 5 Sprite - HAMMERx3
+	//Sector 5 Sprite - COINSx750
 	sprite_5 = Sprite::create(SPRITE_SECTOR_5);
 	rewards[4] = sprite_5;
 	sectors->addChild(sprite_5, 1);
-	sprite_5->setPosition(Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_1));
+	sprite_5->setPosition(Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_1));
 	sprite_5->setRotation(-ANGLE_SECTOR_5);
 	addLabelWithQuantity(sprite_5, QTY_SECTOR_5);
 
-	//Sector 6 Sprite - GEMx35
+	//Sector 6 Sprite - BRUSHx1
 	sprite_6 = Sprite::create(SPRITE_SECTOR_6);
 	rewards[5] = sprite_6;
 	sectors->addChild(sprite_6, 1);
-	sprite_6->setPosition(Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_2));
+	sprite_6->setPosition(Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_2));
 	sprite_6->setRotation(-ANGLE_SECTOR_6);
 	addLabelWithQuantity(sprite_6, QTY_SECTOR_6);
 
-	//Sector 7 Sprite - BRUSHx3
+	//Sector 7 Sprite - GEMSx75
 	sprite_7 = Sprite::create(SPRITE_SECTOR_7);
 	rewards[6] = sprite_7;
 	sectors->addChild(sprite_7, 1);
-	sprite_7->setPosition(Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_3));
+	sprite_7->setPosition(Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_3));
 	sprite_7->setRotation(-ANGLE_SECTOR_7);
 	sprite_7->setScale(0.8f);
 	addLabelWithQuantity(sprite_7, QTY_SECTOR_7);
 
-	//Sector 8 Sprite - LIFEx30
+	//Sector 8 Sprite - HAMMERx1
 	sprite_8 = Sprite::create(SPRITE_SECTOR_8);
 	rewards[7] = sprite_8;
 	sectors->addChild(sprite_8, 1);
-	sprite_8->setPosition(Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_4));
+	sprite_8->setPosition(Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_4));
 	sprite_8->setRotation(-ANGLE_SECTOR_8);
 	addLabelWithQuantity(sprite_8, QTY_SECTOR_8);
 
@@ -187,7 +187,7 @@ void SpinnerScene::touchEvent(Ref* sender, Widget::TouchEventType type)
 	//move reward to center of screen
 	auto showReward = CallFunc::create([&]() {
 		//record members of reward sprite (for replacement later)
-		reward_sprite = rewards[lastReward - 1];
+		reward_sprite = rewards[last_reward - 1];
 		reward_position = reward_sprite->getPosition();
 		Vec2 location = reward_sprite->getParent()->convertToWorldSpace(reward_position);
 		reward_rotation = reward_sprite->getRotation();
@@ -242,48 +242,47 @@ void SpinnerScene::touchEvent(Ref* sender, Widget::TouchEventType type)
 float SpinnerScene::getGoalAngle()
 {
 	//generate random int in [1,100]
-
 	int r_num = rand() % 100 + 1;
 
 	//depending on r_num, return angle of sector
 	if (r_num <= SECTOR_LIMIT_1)
 	{
-		lastReward = 1;
+		last_reward = 1;
 		return ANGLE_SECTOR_1;
 	}
 	if (r_num <= SECTOR_LIMIT_2)
 	{
-		lastReward = 2;
+		last_reward = 2;
 		return ANGLE_SECTOR_2;
 	}
 	if (r_num <= SECTOR_LIMIT_3)
 	{
-		lastReward = 3;
+		last_reward = 3;
 		return ANGLE_SECTOR_3;
 	}
 	if (r_num <= SECTOR_LIMIT_4)
 	{
-		lastReward = 4;
+		last_reward = 4;
 		return ANGLE_SECTOR_4;
 	}
 	if (r_num <= SECTOR_LIMIT_5)
 	{
-		lastReward = 5;
+		last_reward = 5;
 		return ANGLE_SECTOR_5;
 	}
 	if (r_num <= SECTOR_LIMIT_6)
 	{
-		lastReward = 6;
+		last_reward = 6;
 		return ANGLE_SECTOR_6;
 	}
 	if (r_num <= SECTOR_LIMIT_7)
 	{
-		lastReward = 7;
+		last_reward = 7;
 		return ANGLE_SECTOR_7;
 	}
 	if (r_num <= SECTOR_LIMIT_8)
 	{
-		lastReward = 8;
+		last_reward = 8;
 		return ANGLE_SECTOR_8;
 	}
 	//this should never happen
@@ -294,17 +293,17 @@ float SpinnerScene::getGoalAngle()
 void SpinnerScene::addLabelWithQuantity(Sprite* sprite, string label_text)
 {
 	//TTF config for all labels
-	TTFConfig fontConfig;
-	fontConfig.fontFilePath = "fonts/arial.ttf";
-	fontConfig.fontSize = 20;
-	fontConfig.outlineSize = 1;
+	TTFConfig font_config;
+	font_config.fontFilePath = "fonts/arial.ttf";
+	font_config.fontSize = 20;
+	font_config.outlineSize = 1;
 
 	//parse label_text in case of subtext
 	istringstream ss(label_text);
 	ss >> label_text;
 
 	//create quantity label for the passed sprite
-	auto sprite_label = Label::createWithTTF(fontConfig, label_text);
+	auto sprite_label = Label::createWithTTF(font_config, label_text);
 	sprite->addChild(sprite_label);
 	sprite_label->setAnchorPoint(Vec2(0.5, 1));
 	sprite_label->setPosition(Vec2(sprite->getBoundingBox().size.width * 0.4, sprite->getBoundingBox().size.height * SPRITE_LABEL_HEIGHT));
@@ -342,7 +341,7 @@ void SpinnerScene::runSpinTest()
 	for (int x = 0; x < 1000; x++)
 	{
 		getGoalAngle();
-		switch (lastReward)
+		switch (last_reward)
 		{
 		case 1:
 			sector_1_count++;

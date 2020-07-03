@@ -42,9 +42,7 @@ class SpinnerScene : public Scene
 {
 public:
     static Scene *createScene();
-
     virtual bool init();
-
     // implement the "static create()" method manually
     CREATE_FUNC(SpinnerScene);
 
@@ -61,11 +59,11 @@ private:
     cocos2d::Sprite *sprite_7;
     cocos2d::Sprite *sprite_8;
     cocos2d::Sprite *rewards[8];
+    int last_reward = 0;
     void touchEvent(Ref *sender, Widget::TouchEventType type);
     void addLabelWithQuantity(Sprite* sprite, string label_text);
     void runSpinTest();
     float getGoalAngle();
-    int lastReward = 0;
 };
 
 #endif // __SPINNER_SCENE_H__
