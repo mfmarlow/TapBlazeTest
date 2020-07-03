@@ -31,6 +31,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string>
+#include <fstream>
+#include <iostream>
 
 using namespace std;
 USING_NS_CC;
@@ -61,6 +63,7 @@ private:
     cocos2d::Sprite *rewards[8];
     void touchEvent(Ref *sender, Widget::TouchEventType type);
     void addLabelWithQuantity(Sprite* sprite, string label_text);
+    void runSpinTest();
     float getGoalAngle();
     int lastReward = 0;
 };
