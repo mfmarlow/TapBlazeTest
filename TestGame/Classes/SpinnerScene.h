@@ -30,7 +30,9 @@
 #include "Definitions.h"
 #include <time.h>
 #include <stdlib.h>
+#include <string>
 
+using namespace std;
 USING_NS_CC;
 using namespace cocos2d::ui;
 
@@ -48,8 +50,19 @@ private:
     cocos2d::Sprite *sectors;
     cocos2d::Sprite *arrow;
     cocos2d::Sprite *border;
+    cocos2d::Sprite *sprite_1;
+    cocos2d::Sprite *sprite_2;
+    cocos2d::Sprite *sprite_3;
+    cocos2d::Sprite *sprite_4;
+    cocos2d::Sprite *sprite_5;
+    cocos2d::Sprite *sprite_6;
+    cocos2d::Sprite *sprite_7;
+    cocos2d::Sprite *sprite_8;
+    cocos2d::Sprite *rewards[8];
     void touchEvent(Ref *sender, Widget::TouchEventType type);
+    void addLabelWithQuantity(Sprite* sprite, string label_text);
     float getGoalAngle();
+    int lastReward = 0;
 };
 
 #endif // __SPINNER_SCENE_H__

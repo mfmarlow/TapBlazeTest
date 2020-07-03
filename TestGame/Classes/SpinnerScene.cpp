@@ -39,12 +39,6 @@ bool SpinnerScene::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    //TTF config for all labels
-    TTFConfig fontConfig;
-    fontConfig.fontFilePath = "fonts/arial.ttf";
-    fontConfig.fontSize = 20;
-    fontConfig.outlineSize = 1;
-
     // add spinner border sprite
     border = Sprite::create("wheel_border.png");
 
@@ -69,93 +63,71 @@ bool SpinnerScene::init()
     float wheel_width = sectors->getBoundingBox().size.width;
     float wheel_height = sectors->getBoundingBox().size.height;
 
-    //HAMMERx1
-    auto hammer_1 = Sprite::create("hammer.png");
-    sectors->addChild(hammer_1, 1);
-    hammer_1->setPosition(Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_4));
-    hammer_1->setRotation(-ANGLE_SECTOR_1);
-    auto hammer_1_label = Label::createWithTTF(fontConfig, "x1");
-    hammer_1->addChild(hammer_1_label);
-    hammer_1_label->setAnchorPoint(Vec2(0.5, 1));
-    hammer_1_label->setPosition(Vec2(hammer_1->getBoundingBox().size.width * 0.4, hammer_1->getBoundingBox().size.height * SPRITE_LABEL_HEIGHT));
+    //Sector 1 Sprite - HAMMERx1
+    sprite_1 = Sprite::create(SPRITE_SECTOR_1);
+    rewards[0] = sprite_1;
+    sectors->addChild(sprite_1, 1);
+    sprite_1->setPosition(Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_4));
+    sprite_1->setRotation(-ANGLE_SECTOR_1);
+    addLabelWithQuantity(sprite_1, QTY_SECTOR_1);
 
-    //GEMx75
-    auto gem_75 = Sprite::create("gem.png");
-    sectors->addChild(gem_75, 1);
-    gem_75->setPosition(Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_3));
-    gem_75->setRotation(-ANGLE_SECTOR_2);
-    auto gem_75_label = Label::createWithTTF(fontConfig, "x75");
-    gem_75->addChild(gem_75_label);
-    gem_75_label->setAnchorPoint(Vec2(0.5, 1));
-    gem_75_label->setPosition(Vec2(gem_75->getBoundingBox().size.width * 0.4, gem_75->getBoundingBox().size.height * SPRITE_LABEL_HEIGHT));
+    //Sector 2 Sprite - GEMx75
+    sprite_2 = Sprite::create(SPRITE_SECTOR_2);
+    rewards[1] = sprite_2;
+    sectors->addChild(sprite_2, 1);
+    sprite_2->setPosition(Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_3));
+    sprite_2->setRotation(-ANGLE_SECTOR_2);
+    addLabelWithQuantity(sprite_2, QTY_SECTOR_2);
 
-    //BRUSHx1
-    auto brush_1 = Sprite::create("brush.png");
-    sectors->addChild(brush_1, 1);
-    brush_1->setPosition(Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_2));
-    brush_1->setRotation(-ANGLE_SECTOR_3);
-    brush_1->setScale(0.8f);
-    auto brush_1_label = Label::createWithTTF(fontConfig, "x1");
-    brush_1->addChild(brush_1_label);
-    brush_1_label->setAnchorPoint(Vec2(0.5, 1));
-    brush_1_label->setPosition(Vec2(brush_1->getBoundingBox().size.width * 0.4, brush_1->getBoundingBox().size.height * SPRITE_LABEL_HEIGHT));
-    brush_1_label->setScale(1.25f);
+    //Sector 3 Sprite - BRUSHx1
+    sprite_3 = Sprite::create(SPRITE_SECTOR_3);
+    rewards[2] = sprite_3;
+    sectors->addChild(sprite_3, 1);
+    sprite_3->setPosition(Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_2));
+    sprite_3->setRotation(-ANGLE_SECTOR_3);
+    sprite_3->setScale(0.8f);
+    addLabelWithQuantity(sprite_3, QTY_SECTOR_3);
 
-    //COINSx750
-    auto coins_750 = Sprite::create("coin.png");
-    sectors->addChild(coins_750, 1);
-    coins_750->setPosition(Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_1));
-    coins_750->setRotation(-ANGLE_SECTOR_4);
-    auto coins_750_label = Label::createWithTTF(fontConfig, "x750");
-    coins_750->addChild(coins_750_label);
-    coins_750_label->setAnchorPoint(Vec2(0.5, 1));
-    coins_750_label->setPosition(Vec2(coins_750->getBoundingBox().size.width * 0.4, coins_750->getBoundingBox().size.height * SPRITE_LABEL_HEIGHT));
+    //Sector 4 Sprite - COINSx750
+    sprite_4 = Sprite::create(SPRITE_SECTOR_4);
+    rewards[3] = sprite_4;
+    sectors->addChild(sprite_4, 1);
+    sprite_4->setPosition(Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_1));
+    sprite_4->setRotation(-ANGLE_SECTOR_4);
+    addLabelWithQuantity(sprite_4, QTY_SECTOR_4);
 
-    //HAMMERx3
-    auto hammer_3 = Sprite::create("hammer.png");
-    sectors->addChild(hammer_3, 1);
-    hammer_3->setPosition(Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_1));
-    hammer_3->setRotation(-ANGLE_SECTOR_5);
-    auto hammer_3_label = Label::createWithTTF(fontConfig, "x3");
-    hammer_3->addChild(hammer_3_label);
-    hammer_3_label->setAnchorPoint(Vec2(0.5, 1));
-    hammer_3_label->setPosition(Vec2(hammer_3->getBoundingBox().size.width * 0.4, hammer_3->getBoundingBox().size.height * SPRITE_LABEL_HEIGHT));
+    //Sector 5 Sprite - HAMMERx3
+    sprite_5 = Sprite::create(SPRITE_SECTOR_5);
+    rewards[4] = sprite_5;
+    sectors->addChild(sprite_5, 1);
+    sprite_5->setPosition(Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_1));
+    sprite_5->setRotation(-ANGLE_SECTOR_5);
+    addLabelWithQuantity(sprite_5, QTY_SECTOR_5);
 
-    //GEMx35
-    auto gem_35 = Sprite::create("gem.png");
-    sectors->addChild(gem_35, 1);
-    gem_35->setPosition(Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_2));
-    gem_35->setRotation(-ANGLE_SECTOR_6);
-    auto gem_35_label = Label::createWithTTF(fontConfig, "x35");
-    gem_35->addChild(gem_35_label);
-    gem_35_label->setAnchorPoint(Vec2(0.5, 1));
-    gem_35_label->setPosition(Vec2(gem_35->getBoundingBox().size.width * 0.4, gem_35->getBoundingBox().size.height * SPRITE_LABEL_HEIGHT));
+    //Sector 6 Sprite - GEMx35
+    sprite_6 = Sprite::create(SPRITE_SECTOR_6);
+    rewards[5] = sprite_6;
+    sectors->addChild(sprite_6, 1);
+    sprite_6->setPosition(Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_2));
+    sprite_6->setRotation(-ANGLE_SECTOR_6);
+    addLabelWithQuantity(sprite_6, QTY_SECTOR_6);
 
-    //BRUSHx3
-    auto brush_3 = Sprite::create("brush.png");
-    sectors->addChild(brush_3, 1);
-    brush_3->setPosition(Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_3));
-    brush_3->setRotation(-ANGLE_SECTOR_7);
-    brush_3->setScale(0.8f);
-    auto brush_3_label = Label::createWithTTF(fontConfig, "x3");
-    brush_3->addChild(brush_3_label);
-    brush_3_label->setAnchorPoint(Vec2(0.5, 1));
-    brush_3_label->setPosition(Vec2(brush_3->getBoundingBox().size.width * 0.4, brush_3->getBoundingBox().size.height * SPRITE_LABEL_HEIGHT));
-    brush_3_label->setScale(1.25f);
+    //Sector 7 Sprite - BRUSHx3
+    sprite_7 = Sprite::create(SPRITE_SECTOR_7);
+    rewards[6] = sprite_7;
+    sectors->addChild(sprite_7, 1);
+    sprite_7->setPosition(Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_3));
+    sprite_7->setRotation(-ANGLE_SECTOR_7);
+    sprite_7->setScale(0.8f);
+    addLabelWithQuantity(sprite_7, QTY_SECTOR_7);
 
-    //LIFEx30
-    auto life_30 = Sprite::create("heart.png");
-    sectors->addChild(life_30, 1);
-    life_30->setPosition(Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_4));
-    life_30->setRotation(-ANGLE_SECTOR_8);
-    auto life_30_label = Label::createWithTTF(fontConfig, "30");
-    life_30->addChild(life_30_label);
-    life_30_label->setAnchorPoint(Vec2(0.5, 1));
-    life_30_label->setPosition(Vec2(life_30->getBoundingBox().size.width * 0.4, life_30->getBoundingBox().size.height * SPRITE_LABEL_HEIGHT));
-    auto life_30_sublabel = Label::createWithTTF("min", "fonts/arial.ttf", 10);
-    life_30_sublabel->enableOutline(Color4B::BLACK, 1);
-    life_30_label->addChild(life_30_sublabel);
-    life_30_sublabel->setPosition(Vec2(life_30_label->getBoundingBox().size.width, 0));
+    //Sector 8 Sprite - LIFEx30
+    sprite_8 = Sprite::create(SPRITE_SECTOR_8);
+    rewards[7] = sprite_8;
+    sectors->addChild(sprite_8, 1);
+    sprite_8->setPosition(Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_4));
+    sprite_8->setRotation(-ANGLE_SECTOR_8);
+    addLabelWithQuantity(sprite_8, QTY_SECTOR_8);
 
     //"play on" button
     auto spin_button = Button::create("spin_button.png");
@@ -169,6 +141,7 @@ bool SpinnerScene::init()
 
     //add the touch event handler to the button
     spin_button->addTouchEventListener(CC_CALLBACK_2(SpinnerScene::touchEvent, this));
+
     return true;
 }
 
@@ -177,15 +150,70 @@ void SpinnerScene::touchEvent(Ref *sender, Widget::TouchEventType type)
 {
     //recover button object from sender reference
     Button *button = (Button *)sender;
+    Sprite *reward_sprite;
+    Vec2 reward_position;
+    float reward_rotation;
+    float reward_scale;
+
+    //actions to be used
+    auto hide = ScaleTo::create(TRANSITION_TIME_FAST, 0);
+    auto show = ScaleTo::create(TRANSITION_TIME_FAST, 1);
 
     auto removeWheel = CallFunc::create([=]() {
-        border->runAction(EaseBackIn::create(ScaleTo::create(BUTTON_TRANSITION_TIME, 0)));
-        sectors->runAction(EaseBackIn::create(ScaleTo::create(BUTTON_TRANSITION_TIME, 0)));
+        border->runAction(EaseBackIn::create(hide->clone()));
+        sectors->runAction(EaseBackIn::create(hide->clone()));
     });
 
     auto showWheel = CallFunc::create([=]() {
-        border->runAction(EaseBackIn::create(ScaleTo::create(BUTTON_TRANSITION_TIME, 1)));
-        sectors->runAction(EaseBackIn::create(ScaleTo::create(BUTTON_TRANSITION_TIME, 1)));
+        border->runAction(EaseBackOut::create(show->clone()));
+        sectors->runAction(EaseBackOut::create(show->clone()));
+    });
+
+    //function for changing button to claim button
+    auto changeToClaim = CallFunc::create([=]() {
+        button->setTitleText("Claim");
+        button->setTag(CLAIM_TAG);
+    });
+
+    //function for changing button back to spin button
+    auto changeToSpin = CallFunc::create([=]() {
+        button->setTitleText("Play On");
+        button->setTag(SPIN_TAG);
+    });
+
+    //move reward to center of screen
+    auto showReward = CallFunc::create([&]() {
+        reward_sprite = rewards[lastReward-1];
+        reward_position = reward_sprite->getPosition();
+        Vec2 location = reward_sprite->getParent()->convertToWorldSpace(reward_position);
+        reward_rotation = reward_sprite->getRotation();
+        reward_scale = reward_sprite->getScale();
+
+        reward_sprite->retain();
+        reward_sprite->removeFromParent();
+        this->addChild(reward_sprite,2);
+        reward_sprite->setPosition(location);
+        reward_sprite->setRotation(0);
+        reward_sprite->setScale(1);
+        reward_sprite->release();
+
+        reward_sprite->runAction(ScaleTo::create(TRANSITION_TIME_FAST, 2));
+        reward_sprite->runAction(MoveTo::create(TRANSITION_TIME_FAST, Vec2(Director::getInstance()->getVisibleSize().width / 2 + Director::getInstance()->getVisibleOrigin().x, Director::getInstance()->getVisibleSize().height / 2 + Director::getInstance()->getVisibleOrigin().y)));
+    });
+
+    //move reward back onto wheel
+    auto replaceReward = CallFunc::create([&]() {
+        reward_sprite = rewards[lastReward-1];
+        reward_sprite->retain();
+        reward_sprite->removeFromParent();
+        sectors->addChild(reward_sprite,1);
+        reward_sprite->setPosition(reward_position); // SIDE EFFECTS PREVENTING?
+        reward_sprite->setRotation(reward_rotation);
+        reward_sprite->setScale(1);
+        reward_sprite->release();
+        
+        //rewards[lastReward-1]->runAction(ScaleTo::create(TRANSITION_TIME_FAST, reward_scale));
+        //rewards[lastReward-1]->runAction(MoveTo::create(TRANSITION_TIME_FAST, reward_position));
     });
 
     if (type == Widget::TouchEventType::ENDED)
@@ -193,27 +221,18 @@ void SpinnerScene::touchEvent(Ref *sender, Widget::TouchEventType type)
         //When clicking button to spin
         if (button->getTag() == SPIN_TAG)
         {
-            //function for changing button to claim
-            auto changeText = CallFunc::create([=]() {
-                button->setTitleText("Claim");
-                button->setTag(CLAIM_TAG);
-            });
-
             //make the button disappear while wheel is spinning
-            button->runAction(Sequence::create(ScaleTo::create(BUTTON_TRANSITION_TIME, 0), DelayTime::create(ROTATION_TIME), changeText, ScaleTo::create(BUTTON_TRANSITION_TIME, 1), nullptr));
-            //make the wheel spin to the reward
-            SpinnerScene::sectors->runAction(Sequence::create(EaseInOut::create(RotateTo::create(ROTATION_TIME, ROTATION_ANGLE + getGoalAngle()), EASING_RATE), removeWheel, nullptr));
+            button->runAction(Sequence::create(hide, DelayTime::create(ROTATION_TIME), changeToClaim, show, nullptr));
+            //make the wheel spin to the reward, then disappear, revealing reward
+            sectors->runAction(Sequence::create(EaseInOut::create(RotateTo::create(ROTATION_TIME, ROTATION_ANGLE + getGoalAngle()), EASING_RATE), removeWheel, showReward, nullptr));
+
+            //rewards[lastReward]->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2 + Director::getInstance()->getVisibleOrigin().x, Director::getInstance()->getVisibleSize().height / 2 + Director::getInstance()->getVisibleOrigin().y));
         }
         //When clicking button to claim
         else if (button->getTag() == CLAIM_TAG)
         {
-            //function for changing button back to spin
-            auto changeText = CallFunc::create([=]() {
-                button->setTitleText("Play On");
-                button->setTag(SPIN_TAG);
-            });
-            //
-            button->runAction(Sequence::create(ScaleTo::create(BUTTON_TRANSITION_TIME, 0), changeText, DelayTime::create(BUTTON_TRANSITION_TIME), showWheel, ScaleTo::create(BUTTON_TRANSITION_TIME, 1), nullptr));
+            //return back to wheel with spin button
+            button->runAction(Sequence::create(hide, changeToSpin, DelayTime::create(TRANSITION_TIME_FAST), showWheel, replaceReward, show, nullptr));
         }
     }
     return;
@@ -228,21 +247,82 @@ float SpinnerScene::getGoalAngle()
 
     //depending on r_num, return angle of sector
     if (r_num <= SECTOR_LIMIT_1)
+    {
+        lastReward = 1;
         return ANGLE_SECTOR_1;
+    }
     if (r_num <= SECTOR_LIMIT_2)
+    {
+        lastReward = 2;
         return ANGLE_SECTOR_2;
+    }
     if (r_num <= SECTOR_LIMIT_3)
+    {
+        lastReward = 3;
         return ANGLE_SECTOR_3;
+    }
     if (r_num <= SECTOR_LIMIT_4)
+    {
+        lastReward = 4;
         return ANGLE_SECTOR_4;
+    }
     if (r_num <= SECTOR_LIMIT_5)
+    {
+        lastReward = 5;
         return ANGLE_SECTOR_5;
+    }
     if (r_num <= SECTOR_LIMIT_6)
+    {
+        lastReward = 6;
         return ANGLE_SECTOR_6;
+    }
     if (r_num <= SECTOR_LIMIT_7)
+    {
+        lastReward = 7;
         return ANGLE_SECTOR_7;
+    }
     if (r_num <= SECTOR_LIMIT_8)
+    {
+        lastReward = 8;
         return ANGLE_SECTOR_8;
+    }
     //this should never happen
     return 0;
+}
+
+//adds label to sprite for quantity.
+void SpinnerScene::addLabelWithQuantity(Sprite *sprite, string label_text)
+{
+    //TTF config for all labels
+    TTFConfig fontConfig;
+    fontConfig.fontFilePath = "fonts/arial.ttf";
+    fontConfig.fontSize = 20;
+    fontConfig.outlineSize = 1;
+
+    //parse label_text in case of subtext
+    istringstream ss(label_text);
+    ss >> label_text;
+
+    //create quantity label for the passed sprite
+    auto sprite_label = Label::createWithTTF(fontConfig, label_text);
+    sprite->addChild(sprite_label);
+    sprite_label->setAnchorPoint(Vec2(0.5, 1));
+    sprite_label->setPosition(Vec2(sprite->getBoundingBox().size.width * 0.4, sprite->getBoundingBox().size.height * SPRITE_LABEL_HEIGHT));
+
+    //if subtext is passed, also create subtext label
+    if (ss)
+    {
+        string label_subtext;
+        ss >> label_subtext;
+        auto sprite_sublabel = Label::createWithTTF(label_subtext, "fonts/arial.ttf", 10);
+        sprite_sublabel->enableOutline(Color4B::BLACK, 1);
+        sprite_label->addChild(sprite_sublabel);
+        sprite_sublabel->setPosition(Vec2(sprite_label->getBoundingBox().size.width, 0));
+    }
+
+    //if the sprite has been scaled, invert scale for the label
+    if (sprite->getScale() != 1)
+    {
+        sprite_label->setScale(1 / sprite->getScale());
+    }
 }

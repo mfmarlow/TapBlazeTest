@@ -3,9 +3,28 @@
 #define ROTATION_TIME 3.0f
 #define ROTATION_ANGLE 3600.0f
 
-#define BUTTON_TRANSITION_TIME 0.1f
+#define BUTTON_TRANSITION_TIME 0.2f
+#define TRANSITION_TIME_FAST 0.2f
 
 #define EASING_RATE 2.0f
+
+#define SPRITE_SECTOR_1 "hammer.png"
+#define SPRITE_SECTOR_2 "gem.png"
+#define SPRITE_SECTOR_3 "brush.png"
+#define SPRITE_SECTOR_4 "coin.png"
+#define SPRITE_SECTOR_5 "hammer.png"
+#define SPRITE_SECTOR_6 "gem.png"
+#define SPRITE_SECTOR_7 "brush.png"
+#define SPRITE_SECTOR_8 "heart.png"
+
+#define QTY_SECTOR_1 "x1"
+#define QTY_SECTOR_2 "x75"
+#define QTY_SECTOR_3 "x1"
+#define QTY_SECTOR_4 "x750"
+#define QTY_SECTOR_5 "x3"
+#define QTY_SECTOR_6 "x35"
+#define QTY_SECTOR_7 "x3"
+#define QTY_SECTOR_8 "30 min"
 
 #define P_SECTOR_1 20
 #define P_SECTOR_2 5
