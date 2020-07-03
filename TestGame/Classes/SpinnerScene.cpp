@@ -150,10 +150,10 @@ void SpinnerScene::touchEvent(Ref *sender, Widget::TouchEventType type)
 {
     //recover button object from sender reference
     Button *button = (Button *)sender;
-    Sprite *reward_sprite;
-    Vec2 reward_position;
-    float reward_rotation;
-    float reward_scale;
+    static Sprite *reward_sprite;
+    static Vec2 reward_position;
+    static float reward_rotation;
+    static float reward_scale;
 
     //actions to be used
     auto hide = ScaleTo::create(TRANSITION_TIME_FAST, 0);
@@ -203,13 +203,12 @@ void SpinnerScene::touchEvent(Ref *sender, Widget::TouchEventType type)
 
     //move reward back onto wheel
     auto replaceReward = CallFunc::create([&]() {
-        reward_sprite = rewards[lastReward-1];
         reward_sprite->retain();
         reward_sprite->removeFromParent();
         sectors->addChild(reward_sprite,1);
         reward_sprite->setPosition(reward_position); // SIDE EFFECTS PREVENTING?
         reward_sprite->setRotation(reward_rotation);
-        reward_sprite->setScale(1);
+        reward_sprite->setScale(reward_scale);
         reward_sprite->release();
         
         //rewards[lastReward-1]->runAction(ScaleTo::create(TRANSITION_TIME_FAST, reward_scale));
