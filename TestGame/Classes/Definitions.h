@@ -62,3 +62,4 @@
 
 #define SPIN_TAG 0
 #define CLAIM_TAG 1
+#define SETTINGS_TAG 2

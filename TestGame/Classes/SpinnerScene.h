@@ -32,7 +32,6 @@
 #include <stdlib.h>
 #include <string>
 #include <fstream>
-#include <iostream>
 
 using namespace std;
 USING_NS_CC;

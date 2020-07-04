@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "SpinnerScene.h"
+#include "MenuScene.h"
 
 Scene* SpinnerScene::createScene()
 {
@@ -40,22 +41,30 @@ bool SpinnerScene::init()
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	srand(time(NULL));
 
+	//add settings button for QA testing
+	auto settings = Button::create("spin_button.png");
+	settings->setTitleText("Settings");
+	settings->setTitleFontSize(20);
+	settings->getTitleLabel()->enableOutline(Color4B::BLACK, 1);
+	settings->getTitleLabel()->setPosition(Vec2(settings->getBoundingBox().size.width / 2, settings->getBoundingBox().size.height * 0.55));
+	settings->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height*0.85 + origin.y));
+	this->addChild(settings,1);
+	settings->setTag(SETTINGS_TAG);
+	settings->addTouchEventListener(CC_CALLBACK_2(SpinnerScene::touchEvent, this));
+
 	// add spinner border sprite
 	border = Sprite::create("wheel_border.png");
-
 	border->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 	this->addChild(border, 1);
 
 	// add spinner arrow sprite
 	arrow = Sprite::create("wheel_arrow.png");
-
 	border->addChild(arrow);
 	arrow->setScale(1.25);
 	arrow->setPosition(Vec2(border->getBoundingBox().size.width / 2, border->getBoundingBox().size.height * 0.95));
 
 	//add spinner sectors sprite (the part that will rotate) which is declared in the header file.
 	sectors = Sprite::create("wheel_sections_8.png");
-
 	sectors->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 	this->addChild(sectors, 0);
 
@@ -143,7 +152,7 @@ bool SpinnerScene::init()
 	//add the touch event handler to the button
 	spin_button->addTouchEventListener(CC_CALLBACK_2(SpinnerScene::touchEvent, this));
 
-	runSpinTest();
+	//runSpinTest();
 
 	return true;
 }
@@ -234,6 +243,12 @@ void SpinnerScene::touchEvent(Ref* sender, Widget::TouchEventType type)
 			//return back to wheel with spin button and put reward sprite back on wheel
 			button->runAction(Sequence::create(hide, changeToSpin, DelayTime::create(TRANSITION_TIME_FAST), showWheel, replaceReward, show, nullptr));
 		}
+		//When clicking the settings button
+		else if (button->getTag() == SETTINGS_TAG)
+		{
+			Scene* menu_scene = MenuScene::createScene();
+			Director::getInstance()->pushScene(menu_scene);
+		}
 	}
 	return;
 }
@@ -245,45 +260,45 @@ float SpinnerScene::getGoalAngle()
 	int r_num = rand() % 100 + 1;
 
 	//depending on r_num, return angle of sector
-	if (r_num <= SECTOR_LIMIT_1)
+	if (r_num <= SECTOR_LIMIT_8)
 	{
-		last_reward = 1;
-		return ANGLE_SECTOR_1;
-	}
-	if (r_num <= SECTOR_LIMIT_2)
-	{
-		last_reward = 2;
-		return ANGLE_SECTOR_2;
-	}
-	if (r_num <= SECTOR_LIMIT_3)
-	{
-		last_reward = 3;
-		return ANGLE_SECTOR_3;
-	}
-	if (r_num <= SECTOR_LIMIT_4)
-	{
-		last_reward = 4;
-		return ANGLE_SECTOR_4;
-	}
-	if (r_num <= SECTOR_LIMIT_5)
-	{
-		last_reward = 5;
-		return ANGLE_SECTOR_5;
-	}
-	if (r_num <= SECTOR_LIMIT_6)
-	{
-		last_reward = 6;
-		return ANGLE_SECTOR_6;
+		last_reward = 8;
+		return ANGLE_SECTOR_8;
 	}
 	if (r_num <= SECTOR_LIMIT_7)
 	{
 		last_reward = 7;
 		return ANGLE_SECTOR_7;
 	}
-	if (r_num <= SECTOR_LIMIT_8)
+	if (r_num <= SECTOR_LIMIT_6)
 	{
-		last_reward = 8;
-		return ANGLE_SECTOR_8;
+		last_reward = 6;
+		return ANGLE_SECTOR_6;
+	}
+	if (r_num <= SECTOR_LIMIT_5)
+	{
+		last_reward = 5;
+		return ANGLE_SECTOR_5;
+	}
+	if (r_num <= SECTOR_LIMIT_4)
+	{
+		last_reward = 4;
+		return ANGLE_SECTOR_4;
+	}
+	if (r_num <= SECTOR_LIMIT_3)
+	{
+		last_reward = 3;
+		return ANGLE_SECTOR_3;
+	}
+	if (r_num <= SECTOR_LIMIT_2)
+	{
+		last_reward = 2;
+		return ANGLE_SECTOR_2;
+	}
+	if (r_num <= SECTOR_LIMIT_1)
+	{
+		last_reward = 1;
+		return ANGLE_SECTOR_1;
 	}
 	//this should never happen
 	return 0;
@@ -370,6 +385,8 @@ void SpinnerScene::runSpinTest()
 		default:
 			break;
 		}
+
+		//Sleep(10);
 	}
 
 	ofstream file;
@@ -385,11 +402,11 @@ void SpinnerScene::runSpinTest()
 		file << "Brushx3: " << sector_7_count << endl;
 		file << "Lifex30: " << sector_8_count << endl;
 		file.close();
-		cout << "unit test complete";
+		log("unit test complete");
 	}
 	else
 	{
-		cout << "Unable to open output file";
+		log("Unable to open output file");
 	}
 	
 }
