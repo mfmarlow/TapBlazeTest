@@ -1,31 +1,7 @@
-/****************************************************************************
- Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
-
- http://www.cocos2d-x.org
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
-
 #include "SpinnerScene.h"
 #include "MenuScene.h"
 
- //set probabilities to default values
+//set probabilities to default values
 int SpinnerScene::p_sector_1 = P_SECTOR_1_DEF;
 int SpinnerScene::p_sector_2 = P_SECTOR_2_DEF;
 int SpinnerScene::p_sector_3 = P_SECTOR_3_DEF;
@@ -74,80 +50,45 @@ bool SpinnerScene::init()
 	arrow->setScale(1.25);
 	arrow->setPosition(Vec2(border->getBoundingBox().size.width / 2, border->getBoundingBox().size.height * 0.95));
 
-	//add spinner sectors sprite (the part that will rotate) which is declared in the header file.
+	//add spinner sectors sprite (the part that will rotate)
 	sectors = Sprite::create("wheel_sections_8.png");
 	sectors->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 	this->addChild(sectors, 0);
 
 	//add reward sprites with labels to the spinner sectors
 
-	float wheel_width = sectors->getBoundingBox().size.width;
-	float wheel_height = sectors->getBoundingBox().size.height;
-
 	//Sector 1 Sprite - LIFEx30
-	sprite_1 = Sprite::create(SPRITE_SECTOR_1);
-	rewards[0] = sprite_1;
-	sectors->addChild(sprite_1, 1);
-	sprite_1->setPosition(Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_4));
-	sprite_1->setRotation(-ANGLE_SECTOR_1);
+	sprite_1 = addSectorSprite(SPRITE_SECTOR_1, 1);
 	addLabelWithQuantity(sprite_1, QTY_SECTOR_1);
 
 	//Sector 2 Sprite - BRUSHx3
-	sprite_2 = Sprite::create(SPRITE_SECTOR_2);
-	rewards[1] = sprite_2;
-	sectors->addChild(sprite_2, 1);
-	sprite_2->setPosition(Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_3));
-	sprite_2->setRotation(-ANGLE_SECTOR_2);
+	sprite_2 = addSectorSprite(SPRITE_SECTOR_2, 2);
 	addLabelWithQuantity(sprite_2, QTY_SECTOR_2);
 
 	//Sector 3 Sprite - GEMSx35
-	sprite_3 = Sprite::create(SPRITE_SECTOR_3);
-	rewards[2] = sprite_3;
-	sectors->addChild(sprite_3, 1);
-	sprite_3->setPosition(Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_2));
-	sprite_3->setRotation(-ANGLE_SECTOR_3);
+	sprite_3 = addSectorSprite(SPRITE_SECTOR_3, 3);
 	sprite_3->setScale(0.8f);
 	addLabelWithQuantity(sprite_3, QTY_SECTOR_3);
 
 	//Sector 4 Sprite - HAMMERx3
-	sprite_4 = Sprite::create(SPRITE_SECTOR_4);
-	rewards[3] = sprite_4;
-	sectors->addChild(sprite_4, 1);
-	sprite_4->setPosition(Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_1));
-	sprite_4->setRotation(-ANGLE_SECTOR_4);
+	sprite_4 = addSectorSprite(SPRITE_SECTOR_4, 4);
 	addLabelWithQuantity(sprite_4, QTY_SECTOR_4);
 
 	//Sector 5 Sprite - COINSx750
-	sprite_5 = Sprite::create(SPRITE_SECTOR_5);
-	rewards[4] = sprite_5;
-	sectors->addChild(sprite_5, 1);
-	sprite_5->setPosition(Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_1));
-	sprite_5->setRotation(-ANGLE_SECTOR_5);
+	sprite_5 = addSectorSprite(SPRITE_SECTOR_5, 5);
 	addLabelWithQuantity(sprite_5, QTY_SECTOR_5);
 
 	//Sector 6 Sprite - BRUSHx1
-	sprite_6 = Sprite::create(SPRITE_SECTOR_6);
-	rewards[5] = sprite_6;
-	sectors->addChild(sprite_6, 1);
-	sprite_6->setPosition(Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_2));
-	sprite_6->setRotation(-ANGLE_SECTOR_6);
+	sprite_6 = addSectorSprite(SPRITE_SECTOR_6, 6);
 	addLabelWithQuantity(sprite_6, QTY_SECTOR_6);
 
 	//Sector 7 Sprite - GEMSx75
-	sprite_7 = Sprite::create(SPRITE_SECTOR_7);
-	rewards[6] = sprite_7;
-	sectors->addChild(sprite_7, 1);
-	sprite_7->setPosition(Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_3));
-	sprite_7->setRotation(-ANGLE_SECTOR_7);
+	sprite_7 = addSectorSprite(SPRITE_SECTOR_7, 7);
 	sprite_7->setScale(0.8f);
 	addLabelWithQuantity(sprite_7, QTY_SECTOR_7);
 
 	//Sector 8 Sprite - HAMMERx1
-	sprite_8 = Sprite::create(SPRITE_SECTOR_8);
-	rewards[7] = sprite_8;
-	sectors->addChild(sprite_8, 1);
-	sprite_8->setPosition(Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_4));
-	sprite_8->setRotation(-ANGLE_SECTOR_8);
+	sprite_8 = addSectorSprite(SPRITE_SECTOR_8, 8);
 	addLabelWithQuantity(sprite_8, QTY_SECTOR_8);
 
 	//"play on" button
@@ -163,20 +104,16 @@ bool SpinnerScene::init()
 	//add the touch event handler to the button
 	spin_button->addTouchEventListener(CC_CALLBACK_2(SpinnerScene::touchEvent, this));
 
-	//runSpinTest();
+	runSpinTest();
 
 	return true;
 }
 
-//handle touch events for button
+//handle touch events for buttons
 void SpinnerScene::touchEvent(Ref* sender, Widget::TouchEventType type)
 {
 	//recover button object from sender reference
 	Button* button = (Button*)sender;
-	static Sprite* reward_sprite;
-	static Vec2 reward_position;
-	static float reward_rotation;
-	static float reward_scale;
 
 	//actions to be used
 	auto hide = ScaleTo::create(TRANSITION_TIME_FAST, 0);
@@ -442,4 +379,54 @@ void SpinnerScene::calculateSectorLimits()
 	sector_limit_7 = p_sector_7 + p_sector_8;
 	sector_limit_8 = p_sector_8;
 	SpinnerScene::p_sector_sum = sector_limit_1;
+}
+
+Sprite* SpinnerScene::addSectorSprite(string image, int sector)
+{
+	float wheel_width = sectors->getBoundingBox().size.width;
+	float wheel_height = sectors->getBoundingBox().size.height;
+
+	auto sprite = Sprite::create(image);
+	rewards[sector - 1] = sprite;
+	sectors->addChild(sprite, 1);
+
+	switch (sector)
+	{
+	case 1:
+		sprite->setPosition(Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_4));
+		sprite->setRotation(-ANGLE_SECTOR_1);
+		break;
+	case 2:
+		sprite->setPosition(Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_3));
+		sprite->setRotation(-ANGLE_SECTOR_2);
+		break;
+	case 3:
+		sprite->setPosition(Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_2));
+		sprite->setRotation(-ANGLE_SECTOR_3);
+		break;
+	case 4:
+		sprite->setPosition(Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_1));
+		sprite->setRotation(-ANGLE_SECTOR_4);
+		break;
+	case 5:
+		sprite->setPosition(Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_1));
+		sprite->setRotation(-ANGLE_SECTOR_5);
+		break;
+	case 6:
+		sprite->setPosition(Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_2));
+		sprite->setRotation(-ANGLE_SECTOR_6);
+		break;
+	case 7:
+		sprite->setPosition(Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_3));
+		sprite->setRotation(-ANGLE_SECTOR_7);
+		break;
+	case 8:
+		sprite->setPosition(Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_4));
+		sprite->setRotation(-ANGLE_SECTOR_8);
+		break;
+	default:
+		break;
+	}
+
+	return sprite;
 }

@@ -11,7 +11,7 @@ USING_NS_CC;
 using namespace ui;
 
 //custom UI element that contains a label and a textfield
-class LiveTextField
+class LiveTextField : public Node
 {
 public:
     LiveTextField(string label_text, Node* parent, Vec2 position, int live_var, int tag);

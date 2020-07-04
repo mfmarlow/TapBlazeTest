@@ -16,14 +16,13 @@ using namespace ui;
 class MenuScene : public Scene
 {
 public:
-    static Scene* createScene();
-    virtual bool init();
-    // implement the "static create()" method manually
-    CREATE_FUNC(MenuScene);
-
+	static Scene* createScene();
+	virtual bool init();
+	// implement the "static create()" method manually
+	CREATE_FUNC(MenuScene);
 private:
-    void touchEvent(Ref* sender, Widget::TouchEventType type);
-    void fieldEvent(Ref* sender, TextField::EventType type);
+	void touchEvent(Ref* sender, Widget::TouchEventType type);
+	void fieldEvent(Ref* sender, TextField::EventType type);
 };
 
 #endif // __MENU_SCENE_H__
