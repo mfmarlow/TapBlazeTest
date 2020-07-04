@@ -6,6 +6,8 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "Definitions.h"
+#include "SpinnerScene.h"
+#include "LiveTextField.h"
 
 using namespace std;
 USING_NS_CC;
@@ -21,6 +23,7 @@ public:
 
 private:
     void touchEvent(Ref* sender, Widget::TouchEventType type);
+    void fieldEvent(Ref* sender, TextField::EventType type);
 };
 
 #endif // __MENU_SCENE_H__

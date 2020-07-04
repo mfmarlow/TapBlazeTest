@@ -27,7 +27,7 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "Definitions.h"
+//#include "Definitions.h"
 #include <time.h>
 #include <stdlib.h>
 #include <string>
@@ -44,6 +44,15 @@ public:
     virtual bool init();
     // implement the "static create()" method manually
     CREATE_FUNC(SpinnerScene);
+    static int p_sector_1;
+    static int p_sector_2;
+    static int p_sector_3;
+    static int p_sector_4;
+    static int p_sector_5;
+    static int p_sector_6;
+    static int p_sector_7;
+    static int p_sector_8;
+    static int p_sector_sum;
 
 private:
     cocos2d::Sprite *sectors;
@@ -58,11 +67,22 @@ private:
     cocos2d::Sprite *sprite_7;
     cocos2d::Sprite *sprite_8;
     cocos2d::Sprite *rewards[8];
+    int sector_limit_1;
+    int sector_limit_2;
+    int sector_limit_3;
+    int sector_limit_4;
+    int sector_limit_5;
+    int sector_limit_6;
+    int sector_limit_7;
+    int sector_limit_8;
     int last_reward = 0;
     void touchEvent(Ref *sender, Widget::TouchEventType type);
     void addLabelWithQuantity(Sprite* sprite, string label_text);
     void runSpinTest();
+    void calculateSectorLimits();
     float getGoalAngle();
+
+
 };
 
 #endif // __SPINNER_SCENE_H__

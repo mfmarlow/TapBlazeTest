@@ -25,6 +25,17 @@
 #include "SpinnerScene.h"
 #include "MenuScene.h"
 
+ //set probabilities to default values
+int SpinnerScene::p_sector_1 = P_SECTOR_1_DEF;
+int SpinnerScene::p_sector_2 = P_SECTOR_2_DEF;
+int SpinnerScene::p_sector_3 = P_SECTOR_3_DEF;
+int SpinnerScene::p_sector_4 = P_SECTOR_4_DEF;
+int SpinnerScene::p_sector_5 = P_SECTOR_5_DEF;
+int SpinnerScene::p_sector_6 = P_SECTOR_6_DEF;
+int SpinnerScene::p_sector_7 = P_SECTOR_7_DEF;
+int SpinnerScene::p_sector_8 = P_SECTOR_8_DEF;
+int SpinnerScene::p_sector_sum = 100;
+
 Scene* SpinnerScene::createScene()
 {
 	return SpinnerScene::create();
@@ -47,8 +58,8 @@ bool SpinnerScene::init()
 	settings->setTitleFontSize(20);
 	settings->getTitleLabel()->enableOutline(Color4B::BLACK, 1);
 	settings->getTitleLabel()->setPosition(Vec2(settings->getBoundingBox().size.width / 2, settings->getBoundingBox().size.height * 0.55));
-	settings->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height*0.85 + origin.y));
-	this->addChild(settings,1);
+	settings->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height * 0.85 + origin.y));
+	this->addChild(settings, 1);
 	settings->setTag(SETTINGS_TAG);
 	settings->addTouchEventListener(CC_CALLBACK_2(SpinnerScene::touchEvent, this));
 
@@ -196,35 +207,41 @@ void SpinnerScene::touchEvent(Ref* sender, Widget::TouchEventType type)
 	//move reward to center of screen
 	auto showReward = CallFunc::create([&]() {
 		//record members of reward sprite (for replacement later)
-		reward_sprite = rewards[last_reward - 1];
-		reward_position = reward_sprite->getPosition();
-		Vec2 location = reward_sprite->getParent()->convertToWorldSpace(reward_position);
-		reward_rotation = reward_sprite->getRotation();
-		reward_scale = reward_sprite->getScale();
+		if (last_reward != 0)
+		{
+			reward_sprite = rewards[last_reward - 1];
+			reward_position = reward_sprite->getPosition();
+			Vec2 location = reward_sprite->getParent()->convertToWorldSpace(reward_position);
+			reward_rotation = reward_sprite->getRotation();
+			reward_scale = reward_sprite->getScale();
 
-		//bring reward sprite to front and center screen
-		reward_sprite->retain();
-		reward_sprite->removeFromParent();
-		this->addChild(reward_sprite, 2);
-		reward_sprite->setPosition(location);
-		reward_sprite->setRotation(0);
-		reward_sprite->setScale(1);
-		reward_sprite->release();
+			//bring reward sprite to front and center screen
+			reward_sprite->retain();
+			reward_sprite->removeFromParent();
+			this->addChild(reward_sprite, 2);
+			reward_sprite->setPosition(location);
+			reward_sprite->setRotation(0);
+			reward_sprite->setScale(1);
+			reward_sprite->release();
 
-		//actions to bring reward sprite to front and center
-		reward_sprite->runAction(ScaleTo::create(TRANSITION_TIME_FAST, 2));
-		reward_sprite->runAction(MoveTo::create(TRANSITION_TIME_FAST, Vec2(Director::getInstance()->getVisibleSize().width / 2 + Director::getInstance()->getVisibleOrigin().x, Director::getInstance()->getVisibleSize().height / 2 + Director::getInstance()->getVisibleOrigin().y)));
+			//actions to bring reward sprite to front and center
+			reward_sprite->runAction(ScaleTo::create(TRANSITION_TIME_FAST, 2));
+			reward_sprite->runAction(MoveTo::create(TRANSITION_TIME_FAST, Vec2(Director::getInstance()->getVisibleSize().width / 2 + Director::getInstance()->getVisibleOrigin().x, Director::getInstance()->getVisibleSize().height / 2 + Director::getInstance()->getVisibleOrigin().y)));
+		}
 		});
 
 	//move reward back onto wheel
 	auto replaceReward = CallFunc::create([&]() {
-		reward_sprite->retain();
-		reward_sprite->removeFromParent();
-		sectors->addChild(reward_sprite, 1);
-		reward_sprite->setPosition(reward_position); // SIDE EFFECTS PREVENTING?
-		reward_sprite->setRotation(reward_rotation);
-		reward_sprite->setScale(reward_scale);
-		reward_sprite->release();
+		if (last_reward != 0)
+		{
+			reward_sprite->retain();
+			reward_sprite->removeFromParent();
+			sectors->addChild(reward_sprite, 1);
+			reward_sprite->setPosition(reward_position); // SIDE EFFECTS PREVENTING?
+			reward_sprite->setRotation(reward_rotation);
+			reward_sprite->setScale(reward_scale);
+			reward_sprite->release();
+		}
 		});
 
 	if (type == Widget::TouchEventType::ENDED)
@@ -256,51 +273,53 @@ void SpinnerScene::touchEvent(Ref* sender, Widget::TouchEventType type)
 //determine the reward and return the angle to spin to
 float SpinnerScene::getGoalAngle()
 {
+	calculateSectorLimits();
 	//generate random int in [1,100]
 	int r_num = rand() % 100 + 1;
 
 	//depending on r_num, return angle of sector
-	if (r_num <= SECTOR_LIMIT_8)
+	if (r_num <= sector_limit_8)
 	{
 		last_reward = 8;
 		return ANGLE_SECTOR_8;
 	}
-	if (r_num <= SECTOR_LIMIT_7)
+	if (r_num <= sector_limit_7)
 	{
 		last_reward = 7;
 		return ANGLE_SECTOR_7;
 	}
-	if (r_num <= SECTOR_LIMIT_6)
+	if (r_num <= sector_limit_6)
 	{
 		last_reward = 6;
 		return ANGLE_SECTOR_6;
 	}
-	if (r_num <= SECTOR_LIMIT_5)
+	if (r_num <= sector_limit_5)
 	{
 		last_reward = 5;
 		return ANGLE_SECTOR_5;
 	}
-	if (r_num <= SECTOR_LIMIT_4)
+	if (r_num <= sector_limit_4)
 	{
 		last_reward = 4;
 		return ANGLE_SECTOR_4;
 	}
-	if (r_num <= SECTOR_LIMIT_3)
+	if (r_num <= sector_limit_3)
 	{
 		last_reward = 3;
 		return ANGLE_SECTOR_3;
 	}
-	if (r_num <= SECTOR_LIMIT_2)
+	if (r_num <= sector_limit_2)
 	{
 		last_reward = 2;
 		return ANGLE_SECTOR_2;
 	}
-	if (r_num <= SECTOR_LIMIT_1)
+	if (r_num <= sector_limit_1)
 	{
 		last_reward = 1;
 		return ANGLE_SECTOR_1;
 	}
-	//this should never happen
+	//if probabilities dont add to 100, we could get here
+	last_reward = 0;
 	return 0;
 }
 
@@ -408,5 +427,19 @@ void SpinnerScene::runSpinTest()
 	{
 		log("Unable to open output file");
 	}
-	
+
+}
+
+//calculate/update the sector limits
+void SpinnerScene::calculateSectorLimits()
+{
+	sector_limit_1 = p_sector_1 + p_sector_2 + p_sector_3 + p_sector_4 + p_sector_5 + p_sector_6 + p_sector_7 + p_sector_8;
+	sector_limit_2 = p_sector_2 + p_sector_3 + p_sector_4 + p_sector_5 + p_sector_6 + p_sector_7 + p_sector_8;
+	sector_limit_3 = p_sector_3 + p_sector_4 + p_sector_5 + p_sector_6 + p_sector_7 + p_sector_8;
+	sector_limit_4 = p_sector_4 + p_sector_5 + p_sector_6 + p_sector_7 + p_sector_8;
+	sector_limit_5 = p_sector_5 + p_sector_6 + p_sector_7 + p_sector_8;
+	sector_limit_6 = p_sector_6 + p_sector_7 + p_sector_8;
+	sector_limit_7 = p_sector_7 + p_sector_8;
+	sector_limit_8 = p_sector_8;
+	SpinnerScene::p_sector_sum = sector_limit_1;
 }

@@ -59,11 +59,13 @@ list(APPEND GAME_SOURCE
      Classes/AppDelegate.cpp
      Classes/SpinnerScene.cpp
      Classes/MenuScene.cpp
+     Classes/LiveTextField.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
      Classes/SpinnerScene.h
      Classes/MenuScene.h
+     Classes/LiveTextField.h
      )
 
 if(ANDROID)
