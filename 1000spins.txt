@@ -1,0 +1,8 @@
+Sector 1: 179
+Sector 2: 105
+Sector 3: 84
+Sector 4: 112
+Sector 5: 43
+Sector 6: 212
+Sector 7: 52
+Sector 8: 213

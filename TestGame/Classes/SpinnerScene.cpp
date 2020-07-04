@@ -341,22 +341,20 @@ void SpinnerScene::runSpinTest()
 		default:
 			break;
 		}
-
-		//Sleep(10);
 	}
 
 	ofstream file;
-	file.open("1000spins.txt");
+	file.open("../../1000spins.txt");
 	if (file)
 	{
-		file << "Hammerx1: " << sector_1_count << endl;
-		file << "Gemsx75: " << sector_2_count << endl;
-		file << "Brushx1: " << sector_3_count << endl;
-		file << "Coinsx750: " << sector_4_count << endl;
-		file << "Hammerx3: " << sector_5_count << endl;
-		file << "Gemsx35: " << sector_6_count << endl;
-		file << "Brushx3: " << sector_7_count << endl;
-		file << "Lifex30: " << sector_8_count << endl;
+		file << "Sector 1: " << sector_1_count << endl;
+		file << "Sector 2: " << sector_2_count << endl;
+		file << "Sector 3: " << sector_3_count << endl;
+		file << "Sector 4: " << sector_4_count << endl;
+		file << "Sector 5: " << sector_5_count << endl;
+		file << "Sector 6: " << sector_6_count << endl;
+		file << "Sector 7: " << sector_7_count << endl;
+		file << "Sector 8: " << sector_8_count << endl;
 		file.close();
 		log("unit test complete");
 	}
