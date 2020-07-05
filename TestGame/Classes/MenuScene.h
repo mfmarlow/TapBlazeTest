@@ -16,7 +16,7 @@ using namespace ui;
 class MenuScene : public Scene
 {
 public:
-	static Scene* createScene();
+	static Scene* createScene(SpinnerScene* prev_scene);
 	virtual bool init();
 	// implement the "static create()" method manually
 	CREATE_FUNC(MenuScene);

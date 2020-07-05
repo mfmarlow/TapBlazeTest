@@ -1,17 +1,6 @@
 #include "SpinnerScene.h"
 #include "MenuScene.h"
 
-//set probabilities to default values
-int SpinnerScene::p_sector_1 = P_SECTOR_1_DEF;
-int SpinnerScene::p_sector_2 = P_SECTOR_2_DEF;
-int SpinnerScene::p_sector_3 = P_SECTOR_3_DEF;
-int SpinnerScene::p_sector_4 = P_SECTOR_4_DEF;
-int SpinnerScene::p_sector_5 = P_SECTOR_5_DEF;
-int SpinnerScene::p_sector_6 = P_SECTOR_6_DEF;
-int SpinnerScene::p_sector_7 = P_SECTOR_7_DEF;
-int SpinnerScene::p_sector_8 = P_SECTOR_8_DEF;
-int SpinnerScene::p_sector_sum = 100;
-
 Scene* SpinnerScene::createScene()
 {
 	return SpinnerScene::create();
@@ -104,7 +93,8 @@ bool SpinnerScene::init()
 	//add the touch event handler to the button
 	spin_button->addTouchEventListener(CC_CALLBACK_2(SpinnerScene::touchEvent, this));
 
-	runSpinTest();
+	//unit-testing
+	//runSpinTest();
 
 	return true;
 }
@@ -200,7 +190,7 @@ void SpinnerScene::touchEvent(Ref* sender, Widget::TouchEventType type)
 		//When clicking the settings button
 		else if (button->getTag() == SETTINGS_TAG)
 		{
-			Scene* menu_scene = MenuScene::createScene();
+			Scene* menu_scene = MenuScene::createScene(this);
 			Director::getInstance()->pushScene(menu_scene);
 		}
 	}
@@ -379,6 +369,7 @@ void SpinnerScene::calculateSectorLimits()
 	SpinnerScene::p_sector_sum = sector_limit_1;
 }
 
+//add passed sprite to passed sector
 Sprite* SpinnerScene::addSectorSprite(string image, int sector)
 {
 	float wheel_width = sectors->getBoundingBox().size.width;
@@ -388,6 +379,7 @@ Sprite* SpinnerScene::addSectorSprite(string image, int sector)
 	rewards[sector - 1] = sprite;
 	sectors->addChild(sprite, 1);
 
+	//depending on desired sector, set position and rotation as necessary.
 	switch (sector)
 	{
 	case 1:

@@ -22,15 +22,16 @@ public:
 	CREATE_FUNC(SpinnerScene);
 
 	//static members for keeping track of probability of sectors
-	static int p_sector_1;
-	static int p_sector_2;
-	static int p_sector_3;
-	static int p_sector_4;
-	static int p_sector_5;
-	static int p_sector_6;
-	static int p_sector_7;
-	static int p_sector_8;
-	static int p_sector_sum;
+	//set probabilities to default values
+	int p_sector_1 = P_SECTOR_1_DEF;
+	int p_sector_2 = P_SECTOR_2_DEF;
+	int p_sector_3 = P_SECTOR_3_DEF;
+	int p_sector_4 = P_SECTOR_4_DEF;
+	int p_sector_5 = P_SECTOR_5_DEF;
+	int p_sector_6 = P_SECTOR_6_DEF;
+	int p_sector_7 = P_SECTOR_7_DEF;
+	int p_sector_8 = P_SECTOR_8_DEF;
+	int p_sector_sum = 100;
 
 private:
 	//sprites that need class scope

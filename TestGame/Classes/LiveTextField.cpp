@@ -26,7 +26,7 @@ LiveTextField* LiveTextField::createWith(string new_label_text, Node* new_parent
 		//create textflied
 		auto field = TextField::create(to_string(ret->live_var), "Arial", 20);
 		ret->parent->addChild(field, 1);
-		field->setPosition(Vec2(ret->position.x*1.5, ret->position.y));
+		field->setPosition(Vec2(ret->position.x*1.75, ret->position.y));
 		field->setMaxLengthEnabled(true);
 		field->setMaxLength(3);
 		field->setTag(ret->tag);

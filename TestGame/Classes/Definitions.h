@@ -65,3 +65,5 @@
 #define TF_6_TAG 16
 #define TF_7_TAG 17
 #define TF_8_TAG 18
+
+#define ERROR 999

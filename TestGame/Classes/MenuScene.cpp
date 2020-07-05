@@ -1,7 +1,10 @@
 #include "MenuScene.h"
 
-Scene* MenuScene::createScene()
+SpinnerScene* prev_scene;
+
+Scene* MenuScene::createScene(SpinnerScene* new_prev_scene)
 {
+	prev_scene = new_prev_scene;
 	return MenuScene::create();
 }
 
@@ -26,28 +29,28 @@ bool MenuScene::init()
 	back_button->addTouchEventListener(CC_CALLBACK_2(MenuScene::touchEvent, this));
 
 	//Textfields to edit the probabilities of sectors
-	auto sector_1_field = LiveTextField::createWith("P(sector 1): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.75 + origin.y), SpinnerScene::p_sector_1, TF_1_TAG);
+	auto sector_1_field = LiveTextField::createWith("P(sector 1): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.75 + origin.y), prev_scene->p_sector_1, TF_1_TAG);
 	sector_1_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
 
-	auto sector_2_field = LiveTextField::createWith("P(sector 2): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.70 + origin.y), SpinnerScene::p_sector_2, TF_2_TAG);
+	auto sector_2_field = LiveTextField::createWith("P(sector 2): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.70 + origin.y), prev_scene->p_sector_2, TF_2_TAG);
 	sector_2_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
 
-	auto sector_3_field = LiveTextField::createWith("P(sector 3): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.65 + origin.y), SpinnerScene::p_sector_3, TF_3_TAG);
+	auto sector_3_field = LiveTextField::createWith("P(sector 3): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.65 + origin.y), prev_scene->p_sector_3, TF_3_TAG);
 	sector_3_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
 
-	auto sector_4_field = LiveTextField::createWith("P(sector 4): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.60 + origin.y), SpinnerScene::p_sector_4, TF_4_TAG);
+	auto sector_4_field = LiveTextField::createWith("P(sector 4): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.60 + origin.y), prev_scene->p_sector_4, TF_4_TAG);
 	sector_4_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
 
-	auto sector_5_field = LiveTextField::createWith("P(sector 5): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.55 + origin.y), SpinnerScene::p_sector_5, TF_5_TAG);
+	auto sector_5_field = LiveTextField::createWith("P(sector 5): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.55 + origin.y), prev_scene->p_sector_5, TF_5_TAG);
 	sector_5_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
 
-	auto sector_6_field = LiveTextField::createWith("P(sector 6): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.50 + origin.y), SpinnerScene::p_sector_6, TF_6_TAG);
+	auto sector_6_field = LiveTextField::createWith("P(sector 6): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.50 + origin.y), prev_scene->p_sector_6, TF_6_TAG);
 	sector_6_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
 
-	auto sector_7_field = LiveTextField::createWith("P(sector 7): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.45 + origin.y), SpinnerScene::p_sector_7, TF_7_TAG);
+	auto sector_7_field = LiveTextField::createWith("P(sector 7): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.45 + origin.y), prev_scene->p_sector_7, TF_7_TAG);
 	sector_7_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
 
-	auto sector_8_field = LiveTextField::createWith("P(sector 8): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.40 + origin.y), SpinnerScene::p_sector_8, TF_8_TAG);
+	auto sector_8_field = LiveTextField::createWith("P(sector 8): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.40 + origin.y), prev_scene->p_sector_8, TF_8_TAG);
 	sector_8_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
 
 	return true;
@@ -58,14 +61,14 @@ void MenuScene::touchEvent(Ref* sender, Widget::TouchEventType type)
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
 	//if the probabilities add to [0,100], enable the back button
-	if (SpinnerScene::p_sector_sum >= 0 && SpinnerScene::p_sector_sum <= 100 && type == Widget::TouchEventType::ENDED)
+	if (prev_scene->p_sector_sum >= 0 && prev_scene->p_sector_sum <= 100 && type == Widget::TouchEventType::ENDED)
 	{
 		Director::getInstance()->popScene();
 	}
 	//if the P(reward) is not in [0,100], show a warning message
 	else if (type == Widget::TouchEventType::ENDED)
 	{
-		auto warning = Label::createWithSystemFont("P(reward) not in [0,100]", "Arial", 30);
+		auto warning = Label::createWithSystemFont("P(reward) not in [0,100]", "Arial", 20);
 		warning->setColor(Color3B::RED);
 		warning->setPosition(Vec2(visibleSize.width * 0.5 + origin.x, visibleSize.height * 0.30 + origin.y));
 		this->addChild(warning);
@@ -97,42 +100,42 @@ void MenuScene::fieldEvent(Ref* sender, TextField::EventType type)
 			switch (txt_field->getTag())
 			{
 			case TF_1_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_1;
-				SpinnerScene::p_sector_1 = input;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_1;
+				prev_scene->p_sector_1 = input;
 				break;
 			case TF_2_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_2;
-				SpinnerScene::p_sector_2 = input;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_2;
+				prev_scene->p_sector_2 = input;
 				break;
 			case TF_3_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_3;
-				SpinnerScene::p_sector_3 = input;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_3;
+				prev_scene->p_sector_3 = input;
 				break;
 			case TF_4_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_4;
-				SpinnerScene::p_sector_4 = input;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_4;
+				prev_scene->p_sector_4 = input;
 				break;
 			case TF_5_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_5;
-				SpinnerScene::p_sector_5 = input;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_5;
+				prev_scene->p_sector_5 = input;
 				break;
 			case TF_6_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_6;
-				SpinnerScene::p_sector_6 = input;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_6;
+				prev_scene->p_sector_6 = input;
 				break;
 			case TF_7_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_7;
-				SpinnerScene::p_sector_7 = input;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_7;
+				prev_scene->p_sector_7 = input;
 				break;
 			case TF_8_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_8;
-				SpinnerScene::p_sector_8 = input;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_8;
+				prev_scene->p_sector_8 = input;
 				break;
 			default:
 				break;
 			}
 			//update p_sector_sum
-			SpinnerScene::p_sector_sum += input;
+			prev_scene->p_sector_sum += input;
 		}
 		//if the input doesnt translate to an int,
 		catch (...)
@@ -144,42 +147,42 @@ void MenuScene::fieldEvent(Ref* sender, TextField::EventType type)
 			switch (txt_field->getTag())
 			{
 			case TF_1_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_1;
-				SpinnerScene::p_sector_1 = 999;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_1;
+				prev_scene->p_sector_1 = ERROR;
 				break;
 			case TF_2_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_2;
-				SpinnerScene::p_sector_2 = 999;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_2;
+				prev_scene->p_sector_2 = ERROR;
 				break;
 			case TF_3_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_3;
-				SpinnerScene::p_sector_3 = 999;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_3;
+				prev_scene->p_sector_3 = ERROR;
 				break;
 			case TF_4_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_4;
-				SpinnerScene::p_sector_4 = 999;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_4;
+				prev_scene->p_sector_4 = ERROR;
 				break;
 			case TF_5_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_5;
-				SpinnerScene::p_sector_5 = 999;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_5;
+				prev_scene->p_sector_5 = ERROR;
 				break;
 			case TF_6_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_6;
-				SpinnerScene::p_sector_6 = 999;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_6;
+				prev_scene->p_sector_6 = ERROR;
 				break;
 			case TF_7_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_7;
-				SpinnerScene::p_sector_7 = 999;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_7;
+				prev_scene->p_sector_7 = ERROR;
 				break;
 			case TF_8_TAG:
-				SpinnerScene::p_sector_sum -= SpinnerScene::p_sector_8;
-				SpinnerScene::p_sector_8 = 999;
+				prev_scene->p_sector_sum -= prev_scene->p_sector_8;
+				prev_scene->p_sector_8 = ERROR;
 				break;
 			default:
 				break;
 			}
 			//update p_sector_sum
-			SpinnerScene::p_sector_sum += 999;
+			prev_scene->p_sector_sum += ERROR;
 		}
 
 	}
