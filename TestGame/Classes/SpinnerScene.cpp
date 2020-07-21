@@ -8,7 +8,7 @@ Scene* SpinnerScene::createScene(vector<string> new_sprite_imgs, vector<string> 
 	scene->labels = new_labels;
 	scene->chances = new_chances;
 	scene->populateSectors();
-	scene->runSpinTest();
+	//scene->runSpinTest();
 	return scene;
 }
 
@@ -91,6 +91,16 @@ bool SpinnerScene::init()
 
 	replaceReward = CallFunc::create([&]() {SpinnerScene::replaceRewardFunc(); });
 
+	//retain these actions for use later
+	hide->retain();
+	show->retain();
+	removeWheel->retain();
+	showWheel->retain();
+	changeToClaim->retain();
+	changeToSpin->retain();
+	showReward->retain();
+	replaceReward->retain();
+
 	return true;
 }
 
@@ -107,6 +117,7 @@ void SpinnerScene::touchEvent(Ref* sender, Widget::TouchEventType type)
 		{
 			//make the button disappear while wheel is spinning, then change to claim button and reappear
 			button->runAction(Sequence::create(hide, DelayTime::create(ROTATION_TIME), changeToClaim, show, nullptr));
+
 			//make the wheel spin to the reward, then disappear, revealing reward
 			sectors->runAction(Sequence::create(EaseInOut::create(RotateTo::create(ROTATION_TIME, ROTATION_ANGLE + getGoalAngle()), EASING_RATE), removeWheel, showReward, nullptr));
 		}
@@ -135,9 +146,17 @@ float SpinnerScene::getGoalAngle()
 	int total_prob = accumulate(chances.begin(), chances.end(), 0);
 	int r_num = (rand() / static_cast<float>(RAND_MAX)) * total_prob;
 
+	//deduct p(each reward) from r_num until reward is reached
 	int reward = 0;
 	while ((r_num -= chances[reward]) > 0)
 		++reward;
+
+	//if no reward is selected (possible if total_prob < 100)
+	if (reward >= SECTOR_COUNT)
+	{
+		last_reward = 0;
+		return 0;
+	}
 
 	last_reward = reward + 1;
 	return sector_angles[reward];

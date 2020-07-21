@@ -4,6 +4,7 @@ Scene* MenuScene::createScene(SpinnerScene* new_spinner_scene)
 {
 	auto scene = MenuScene::create();
 	scene->spinner_scene = new_spinner_scene;
+	scene->populateTextFields();
 	return scene;
 }
 
@@ -27,30 +28,7 @@ bool MenuScene::init()
 	this->addChild(back_button, 0);
 	back_button->addTouchEventListener(CC_CALLBACK_2(MenuScene::touchEvent, this));
 
-	//Textfields to edit the probabilities of sectors
-	auto sector_1_field = LiveTextField::createWith("P(sector 1): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.75 + origin.y), spinner_scene->chances[0], TF_1_TAG);
-	sector_1_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
 
-	auto sector_2_field = LiveTextField::createWith("P(sector 2): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.70 + origin.y), spinner_scene->chances[1], TF_2_TAG);
-	sector_2_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
-
-	auto sector_3_field = LiveTextField::createWith("P(sector 3): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.65 + origin.y), spinner_scene->chances[2], TF_3_TAG);
-	sector_3_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
-
-	auto sector_4_field = LiveTextField::createWith("P(sector 4): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.60 + origin.y), spinner_scene->chances[3], TF_4_TAG);
-	sector_4_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
-
-	auto sector_5_field = LiveTextField::createWith("P(sector 5): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.55 + origin.y), spinner_scene->chances[4], TF_5_TAG);
-	sector_5_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
-
-	auto sector_6_field = LiveTextField::createWith("P(sector 6): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.50 + origin.y), spinner_scene->chances[5], TF_6_TAG);
-	sector_6_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
-
-	auto sector_7_field = LiveTextField::createWith("P(sector 7): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.45 + origin.y), spinner_scene->chances[6], TF_7_TAG);
-	sector_7_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
-
-	auto sector_8_field = LiveTextField::createWith("P(sector 8): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.40 + origin.y), spinner_scene->chances[7], TF_8_TAG);
-	sector_8_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
 
 	return true;
 }
@@ -185,4 +163,35 @@ void MenuScene::fieldEvent(Ref* sender, TextField::EventType type)
 		}
 
 	}
+}
+
+void MenuScene::populateTextFields()
+{
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto origin = Director::getInstance()->getVisibleOrigin();
+
+	//Textfields to edit the probabilities of sectors
+	auto sector_1_field = LiveTextField::createWith("P(sector 1): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.75 + origin.y), spinner_scene->chances[0], TF_1_TAG);
+	sector_1_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
+
+	auto sector_2_field = LiveTextField::createWith("P(sector 2): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.70 + origin.y), spinner_scene->chances[1], TF_2_TAG);
+	sector_2_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
+
+	auto sector_3_field = LiveTextField::createWith("P(sector 3): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.65 + origin.y), spinner_scene->chances[2], TF_3_TAG);
+	sector_3_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
+
+	auto sector_4_field = LiveTextField::createWith("P(sector 4): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.60 + origin.y), spinner_scene->chances[3], TF_4_TAG);
+	sector_4_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
+
+	auto sector_5_field = LiveTextField::createWith("P(sector 5): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.55 + origin.y), spinner_scene->chances[4], TF_5_TAG);
+	sector_5_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
+
+	auto sector_6_field = LiveTextField::createWith("P(sector 6): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.50 + origin.y), spinner_scene->chances[5], TF_6_TAG);
+	sector_6_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
+
+	auto sector_7_field = LiveTextField::createWith("P(sector 7): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.45 + origin.y), spinner_scene->chances[6], TF_7_TAG);
+	sector_7_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
+
+	auto sector_8_field = LiveTextField::createWith("P(sector 8): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.40 + origin.y), spinner_scene->chances[7], TF_8_TAG);
+	sector_8_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
 }

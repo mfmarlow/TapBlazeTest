@@ -24,6 +24,7 @@ private:
 	void touchEvent(Ref* sender, Widget::TouchEventType type);
 	void fieldEvent(Ref* sender, TextField::EventType type);
 	SpinnerScene* spinner_scene;
+	void populateTextFields();
 };
 
 #endif // __MENU_SCENE_H__
