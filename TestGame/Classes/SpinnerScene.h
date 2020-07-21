@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string>
 #include <fstream>
+#include <vector>
+#include <numeric>
 
 using namespace std;
 USING_NS_CC;
@@ -16,21 +18,13 @@ using namespace cocos2d::ui;
 class SpinnerScene : public Scene
 {
 public:
-	static Scene* createScene();
+	static Scene* createScene(vector<string> new_sprite_imgs, vector<string> new_labels, vector<int> new_chances);
 	virtual bool init();
 	// implement the "static create()" method manually
 	CREATE_FUNC(SpinnerScene);
 
-	//static members for keeping track of probability of sectors
-	//set probabilities to default values
-	int p_sector_1 = P_SECTOR_1_DEF;
-	int p_sector_2 = P_SECTOR_2_DEF;
-	int p_sector_3 = P_SECTOR_3_DEF;
-	int p_sector_4 = P_SECTOR_4_DEF;
-	int p_sector_5 = P_SECTOR_5_DEF;
-	int p_sector_6 = P_SECTOR_6_DEF;
-	int p_sector_7 = P_SECTOR_7_DEF;
-	int p_sector_8 = P_SECTOR_8_DEF;
+	//public members for keeping track of probability of sectors
+	vector<int> chances;
 	int p_sector_sum = 100;
 
 private:
@@ -38,15 +32,7 @@ private:
 	cocos2d::Sprite* sectors;
 	cocos2d::Sprite* arrow;
 	cocos2d::Sprite* border;
-	cocos2d::Sprite* sprite_1;
-	cocos2d::Sprite* sprite_2;
-	cocos2d::Sprite* sprite_3;
-	cocos2d::Sprite* sprite_4;
-	cocos2d::Sprite* sprite_5;
-	cocos2d::Sprite* sprite_6;
-	cocos2d::Sprite* sprite_7;
-	cocos2d::Sprite* sprite_8;
-	cocos2d::Sprite* rewards[8];
+	vector<Sprite*> sprites;
 
 	//keep track of sector limits (for deciding reward)
 	int sector_limit_1;
@@ -65,14 +51,25 @@ private:
 	float reward_rotation;
 	float reward_scale;
 
+	//spinner info
+	vector<string> sprite_imgs;
+	vector<string> labels;
+
+
 	//private methods
 	void touchEvent(Ref* sender, Widget::TouchEventType type);
 	Sprite* addSectorSprite(string image, int sector);
 	void addLabelWithQuantity(Sprite* sprite, string label_text);
-	void calculateSectorLimits();
 	float getGoalAngle();
-
 	void runSpinTest();
+	void populateSectors();
+	void showRewardFunc();
+	void replaceRewardFunc();
+
+	//private actions
+	ScaleTo* hide, * show;
+	CallFunc* removeWheel, * showWheel, * changeToClaim, * changeToSpin, * showReward, * replaceReward;
+
 };
 
 #endif // __SPINNER_SCENE_H__
