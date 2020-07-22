@@ -37,15 +37,15 @@ void MenuScene::touchEvent(Ref* sender, Widget::TouchEventType type)
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
-	//if the probabilities add to [0,100], enable the back button
-	if (spinner_scene->p_sector_sum >= 0 && spinner_scene->p_sector_sum <= 100 && type == Widget::TouchEventType::ENDED)
+	//if the total_prob is in [0,100], enable the back button
+	if (spinner_scene->getTotalProb() >= 0 && spinner_scene->getTotalProb() <= 100 && type == Widget::TouchEventType::ENDED)
 	{
 		Director::getInstance()->popScene();
 	}
-	//if the P(reward) is not in [0,100], show a warning message
+	//if the total_prob is not in [0,100], show a warning message
 	else if (type == Widget::TouchEventType::ENDED)
 	{
-		auto warning = Label::createWithSystemFont("P(reward) not in [0,100]", "Arial", 20);
+		auto warning = Label::createWithSystemFont("Total probability not in [0,100]", "Arial", 20);
 		warning->setColor(Color3B::RED);
 		warning->setPosition(Vec2(visibleSize.width * 0.5 + origin.x, visibleSize.height * 0.30 + origin.y));
 		this->addChild(warning);
@@ -56,8 +56,14 @@ void MenuScene::touchEvent(Ref* sender, Widget::TouchEventType type)
 //handles when text field is exited
 void MenuScene::fieldEvent(Ref* sender, TextField::EventType type)
 {
-	//capture the sending field
+	//capture the sending field and tag
 	TextField* txt_field = (TextField*)sender;
+	int field_tag = txt_field->getTag();
+
+	//get the sector number from the field tag
+	vector<int> tags = { TF_1_TAG, TF_2_TAG, TF_3_TAG, TF_4_TAG, TF_5_TAG, TF_6_TAG, TF_7_TAG, TF_8_TAG };
+	vector<int>::iterator itr = find(tags.begin(), tags.end(), field_tag);
+	int sector_num = distance(tags.begin(), itr);
 
 	//if done entering
 	if (type == TextField::EventType::DETACH_WITH_IME)
@@ -73,93 +79,18 @@ void MenuScene::fieldEvent(Ref* sender, TextField::EventType type)
 		try
 		{
 			int input = stoi(input_string);
-			//depending on which textfield called, update
-			switch (txt_field->getTag())
-			{
-			case TF_1_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[0];
-				spinner_scene->chances[0] = input;
-				break;
-			case TF_2_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[1];
-				spinner_scene->chances[1] = input;
-				break;
-			case TF_3_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[2];
-				spinner_scene->chances[2] = input;
-				break;
-			case TF_4_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[3];
-				spinner_scene->chances[3] = input;
-				break;
-			case TF_5_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[4];
-				spinner_scene->chances[4] = input;
-				break;
-			case TF_6_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[5];
-				spinner_scene->chances[5] = input;
-				break;
-			case TF_7_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[6];
-				spinner_scene->chances[6] = input;
-				break;
-			case TF_8_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[7];
-				spinner_scene->chances[7] = input;
-				break;
-			default:
-				break;
-			}
-			//update p_sector_sum
-			spinner_scene->p_sector_sum += input;
+
+			//depending on which textfield called, update prob for that sector
+			spinner_scene->setChancesOf(sector_num, input);
 		}
 		//if the input doesnt translate to an int,
 		catch (...)
 		{
-			//log bad input and invalidate.
-
+			//log bad input
 			log("Bad input");
 
-			switch (txt_field->getTag())
-			{
-			case TF_1_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[0];
-				spinner_scene->chances[0] = ERROR;
-				break;
-			case TF_2_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[1];
-				spinner_scene->chances[1] = ERROR;
-				break;
-			case TF_3_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[2];
-				spinner_scene->chances[2] = ERROR;
-				break;
-			case TF_4_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[3];
-				spinner_scene->chances[3] = ERROR;
-				break;
-			case TF_5_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[4];
-				spinner_scene->chances[4] = ERROR;
-				break;
-			case TF_6_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[5];
-				spinner_scene->chances[5] = ERROR;
-				break;
-			case TF_7_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[6];
-				spinner_scene->chances[6] = ERROR;
-				break;
-			case TF_8_TAG:
-				spinner_scene->p_sector_sum -= spinner_scene->chances[7];
-				spinner_scene->chances[7] = ERROR;
-				break;
-			default:
-				break;
-			}
-			//update p_sector_sum
-			spinner_scene->p_sector_sum += ERROR;
+			//invalidate the probability for that field
+			spinner_scene->setChancesOf(sector_num, ERROR);
 		}
 
 	}
@@ -169,29 +100,13 @@ void MenuScene::populateTextFields()
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
+	float start_height = FIELD_STARTING_HEIGHT;
+	float separation = FIELD_SEPARATION;
+	int tags[SECTOR_COUNT] = { TF_1_TAG ,TF_2_TAG ,TF_3_TAG ,TF_4_TAG ,TF_5_TAG ,TF_6_TAG ,TF_7_TAG ,TF_8_TAG };
 
-	//Textfields to edit the probabilities of sectors
-	auto sector_1_field = LiveTextField::createWith("P(sector 1): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.75 + origin.y), spinner_scene->chances[0], TF_1_TAG);
-	sector_1_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
-
-	auto sector_2_field = LiveTextField::createWith("P(sector 2): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.70 + origin.y), spinner_scene->chances[1], TF_2_TAG);
-	sector_2_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
-
-	auto sector_3_field = LiveTextField::createWith("P(sector 3): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.65 + origin.y), spinner_scene->chances[2], TF_3_TAG);
-	sector_3_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
-
-	auto sector_4_field = LiveTextField::createWith("P(sector 4): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.60 + origin.y), spinner_scene->chances[3], TF_4_TAG);
-	sector_4_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
-
-	auto sector_5_field = LiveTextField::createWith("P(sector 5): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.55 + origin.y), spinner_scene->chances[4], TF_5_TAG);
-	sector_5_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
-
-	auto sector_6_field = LiveTextField::createWith("P(sector 6): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.50 + origin.y), spinner_scene->chances[5], TF_6_TAG);
-	sector_6_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
-
-	auto sector_7_field = LiveTextField::createWith("P(sector 7): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.45 + origin.y), spinner_scene->chances[6], TF_7_TAG);
-	sector_7_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
-
-	auto sector_8_field = LiveTextField::createWith("P(sector 8): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * 0.40 + origin.y), spinner_scene->chances[7], TF_8_TAG);
-	sector_8_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
+	for (int x = 0; x < SECTOR_COUNT; x++)
+	{
+		auto sector_field = LiveTextField::createWith("P(sector" + to_string(x + 1) + "): ", this, Vec2(visibleSize.width * 0.33 + origin.x, visibleSize.height * (start_height - x * separation) + origin.y), spinner_scene->getChancesOf(x), tags[x]);
+		sector_field->getTextField()->addEventListener(CC_CALLBACK_2(MenuScene::fieldEvent, this));
+	}
 }

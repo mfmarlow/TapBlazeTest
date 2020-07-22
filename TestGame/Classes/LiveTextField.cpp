@@ -30,6 +30,7 @@ LiveTextField* LiveTextField::createWith(string new_label_text, Node* new_parent
 		field->setMaxLengthEnabled(true);
 		field->setMaxLength(3);
 		field->setTag(ret->tag);
+		field->setCursorEnabled(true);
 		ret->setField(field);
 		return ret;
 	}

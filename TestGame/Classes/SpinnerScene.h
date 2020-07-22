@@ -20,41 +20,32 @@ class SpinnerScene : public Scene
 public:
 	static Scene* createScene(vector<string> new_sprite_imgs, vector<string> new_labels, vector<int> new_chances);
 	virtual bool init();
+
 	// implement the "static create()" method manually
 	CREATE_FUNC(SpinnerScene);
 
-	//public members for keeping track of probability of sectors
-	vector<int> chances;
-	int p_sector_sum = 100;
+	//getters and setters
+	int getChancesOf(int sector_num);
+	int getTotalProb();
+	void setChancesOf(int sector_num, int new_chances);
 
 private:
-	//sprites that need class scope
-	cocos2d::Sprite* sectors;
-	cocos2d::Sprite* arrow;
-	cocos2d::Sprite* border;
+	//sprites
+	cocos2d::Sprite* sectors, *arrow, *border;
 	vector<Sprite*> sprites;
 
-	//keep track of sector limits (for deciding reward)
-	int sector_limit_1;
-	int sector_limit_2;
-	int sector_limit_3;
-	int sector_limit_4;
-	int sector_limit_5;
-	int sector_limit_6;
-	int sector_limit_7;
-	int sector_limit_8;
-	int last_reward = 0;
-
-	//keep track of reward info 
+	//keep track of reward sprite info 
+	int last_reward = ERROR;
 	Sprite* reward_sprite;
 	Vec2 reward_position;
-	float reward_rotation;
-	float reward_scale;
+	float reward_rotation, reward_scale;
 
-	//spinner info
-	vector<string> sprite_imgs;
-	vector<string> labels;
+	//reward info for display
+	vector<string> sprite_imgs, labels;
 
+	//probabilities
+	vector<int> chances;
+	int total_prob = 100;
 
 	//private methods
 	void touchEvent(Ref* sender, Widget::TouchEventType type);

@@ -28,6 +28,9 @@
 
 #define SPRITE_LABEL_HEIGHT 0.2f
 
+#define FIELD_STARTING_HEIGHT 0.75f
+#define FIELD_SEPARATION 0.07f
+
 #define SPIN_TAG 0
 #define CLAIM_TAG 1
 #define SETTINGS_TAG 2

@@ -63,7 +63,7 @@ bool SpinnerScene::init()
 	//add the touch event handler to the button
 	spin_button->addTouchEventListener(CC_CALLBACK_2(SpinnerScene::touchEvent, this));
 
-	//set up actions TODO - FIX 
+	//set up actions
 	hide = ScaleTo::create(TRANSITION_TIME_FAST, 0);
 	show = ScaleTo::create(TRANSITION_TIME_FAST, 1);
 
@@ -142,23 +142,22 @@ float SpinnerScene::getGoalAngle()
 {
 	float sector_angles[SECTOR_COUNT] = { ANGLE_SECTOR_1, ANGLE_SECTOR_2, ANGLE_SECTOR_3, ANGLE_SECTOR_4,
 										  ANGLE_SECTOR_5, ANGLE_SECTOR_6, ANGLE_SECTOR_7, ANGLE_SECTOR_8 };
-	//generate random int in [0,total_prob]
-	int total_prob = accumulate(chances.begin(), chances.end(), 0);
-	int r_num = (rand() / static_cast<float>(RAND_MAX)) * total_prob;
+	//generate random int in [1,100]
+	int r_num = ((rand() / static_cast<float>(RAND_MAX)) * 100) + 1;
 
 	//deduct p(each reward) from r_num until reward is reached
 	int reward = 0;
-	while ((r_num -= chances[reward]) > 0)
+	while (reward < SECTOR_COUNT && (r_num -= chances[reward]) > 0)
 		++reward;
 
 	//if no reward is selected (possible if total_prob < 100)
 	if (reward >= SECTOR_COUNT)
 	{
-		last_reward = 0;
+		last_reward = ERROR;
 		return 0;
 	}
 
-	last_reward = reward + 1;
+	last_reward = reward;
 	return sector_angles[reward];
 }
 
@@ -217,28 +216,28 @@ void SpinnerScene::runSpinTest()
 		getGoalAngle();
 		switch (last_reward)
 		{
-		case 1:
+		case 0:
 			sector_1_count++;
 			break;
-		case 2:
+		case 1:
 			sector_2_count++;
 			break;
-		case 3:
+		case 2:
 			sector_3_count++;
 			break;
-		case 4:
+		case 3:
 			sector_4_count++;
 			break;
-		case 5:
+		case 4:
 			sector_5_count++;
 			break;
-		case 6:
+		case 5:
 			sector_6_count++;
 			break;
-		case 7:
+		case 6:
 			sector_7_count++;
 			break;
-		case 8:
+		case 7:
 			sector_8_count++;
 			break;
 		default:
@@ -306,17 +305,18 @@ void SpinnerScene::populateSectors()
 {
 	for (int x = 0; x < SECTOR_COUNT; x++)
 	{
-		this->sprites.push_back(addSectorSprite(this->sprite_imgs[x], x));
-		addLabelWithQuantity(this->sprites[x], this->labels[x]);
+		sprites.push_back(addSectorSprite(sprite_imgs[x], x));
+		addLabelWithQuantity(sprites[x], labels[x]);
 	}
 }
 
+//function for show reward animation
 void SpinnerScene::showRewardFunc()
 {
 	//record members of reward sprite (for replacement later)
-	if (last_reward != 0)
+	if (last_reward != ERROR)
 	{
-		reward_sprite = sprites.at(last_reward-1);
+		reward_sprite = sprites.at(last_reward);
 		reward_position = reward_sprite->getPosition();
 		Vec2 location = reward_sprite->getParent()->convertToWorldSpace(reward_position);
 		reward_rotation = reward_sprite->getRotation();
@@ -337,9 +337,10 @@ void SpinnerScene::showRewardFunc()
 	}
 }
 
+//fuction for replace reward animation
 void SpinnerScene::replaceRewardFunc()
 {
-	if (last_reward != 0)
+	if (last_reward != ERROR)
 	{
 		reward_sprite->retain();
 		reward_sprite->removeFromParent();
@@ -349,4 +350,22 @@ void SpinnerScene::replaceRewardFunc()
 		reward_sprite->setScale(reward_scale);
 		reward_sprite->release();
 	}
+}
+
+int SpinnerScene::getChancesOf(int sector_num)
+{
+	return chances.at(sector_num);
+}
+
+int SpinnerScene::getTotalProb()
+{
+	return total_prob;
+}
+
+//sets probability of sector and updates total_prob
+void SpinnerScene::setChancesOf(int sector_num, int new_chances)
+{
+	total_prob -= chances.at(sector_num);
+	chances.at(sector_num) = new_chances;
+	total_prob += new_chances;
 }
