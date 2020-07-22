@@ -9,7 +9,7 @@ Scene* SpinnerScene::createScene(vector<string> new_sprite_imgs, vector<string> 
 	scene->chances = new_chances;
 	scene->calcTotalProb();
 	scene->populateSectors();
-	scene->runSpinTest();
+	//scene->runSpinTest();
 	return scene;
 }
 
@@ -22,7 +22,6 @@ bool SpinnerScene::init()
 
 	visible_size = Director::getInstance()->getVisibleSize();
 	origin = Director::getInstance()->getVisibleOrigin();
-
 	srand(time(NULL));
 
 	//add settings button for QA testing

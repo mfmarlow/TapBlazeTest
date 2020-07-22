@@ -1,8 +1,9 @@
-Sector 1: 179
-Sector 2: 105
-Sector 3: 84
-Sector 4: 112
-Sector 5: 43
-Sector 6: 212
-Sector 7: 52
-Sector 8: 213
+Sector 1: 181
+Sector 2: 99
+Sector 3: 103
+Sector 4: 100
+Sector 5: 54
+Sector 6: 193
+Sector 7: 48
+Sector 8: 222
+No sector: 0
