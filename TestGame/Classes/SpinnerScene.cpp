@@ -7,8 +7,9 @@ Scene* SpinnerScene::createScene(vector<string> new_sprite_imgs, vector<string> 
 	scene->sprite_imgs = new_sprite_imgs;
 	scene->labels = new_labels;
 	scene->chances = new_chances;
+	scene->calcTotalProb();
 	scene->populateSectors();
-	//scene->runSpinTest();
+	scene->runSpinTest();
 	return scene;
 }
 
@@ -19,8 +20,9 @@ bool SpinnerScene::init()
 		return false;
 	}
 
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	visible_size = Director::getInstance()->getVisibleSize();
+	origin = Director::getInstance()->getVisibleOrigin();
+
 	srand(time(NULL));
 
 	//add settings button for QA testing
@@ -29,14 +31,14 @@ bool SpinnerScene::init()
 	settings->setTitleFontSize(20);
 	settings->getTitleLabel()->enableOutline(Color4B::BLACK, 1);
 	settings->getTitleLabel()->setPosition(Vec2(settings->getBoundingBox().size.width / 2, settings->getBoundingBox().size.height * 0.55));
-	settings->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height * 0.85 + origin.y));
+	settings->setPosition(Vec2(visible_size.width / 2 + origin.x, visible_size.height * 0.85 + origin.y));
 	this->addChild(settings, 1);
 	settings->setTag(SETTINGS_TAG);
 	settings->addTouchEventListener(CC_CALLBACK_2(SpinnerScene::touchEvent, this));
 
 	// add spinner border sprite
 	border = Sprite::create("wheel_border.png");
-	border->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+	border->setPosition(Vec2(visible_size.width / 2 + origin.x, visible_size.height / 2 + origin.y));
 	this->addChild(border, 1);
 
 	// add spinner arrow sprite
@@ -47,7 +49,7 @@ bool SpinnerScene::init()
 
 	//add spinner sectors sprite (the part that will rotate)
 	sectors = Sprite::create("wheel_sections_8.png");
-	sectors->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+	sectors->setPosition(Vec2(visible_size.width / 2 + origin.x, visible_size.height / 2 + origin.y));
 	this->addChild(sectors, 0);
 
 	//"play on" button
@@ -56,9 +58,27 @@ bool SpinnerScene::init()
 	spin_button->setTitleFontSize(26);
 	spin_button->getTitleLabel()->enableOutline(Color4B::BLACK, 1);
 	spin_button->getTitleLabel()->setPosition(Vec2(spin_button->getBoundingBox().size.width / 2, spin_button->getBoundingBox().size.height * 0.55));
-	spin_button->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 5 + origin.y));
+	spin_button->setPosition(Vec2(visible_size.width / 2 + origin.x, visible_size.height / 5 + origin.y));
 	this->addChild(spin_button, 1);
 	spin_button->setTag(SPIN_TAG);
+
+	float wheel_width = sectors->getBoundingBox().size.width;
+	float wheel_height = sectors->getBoundingBox().size.height;
+
+	sector_angles = { ANGLE_SECTOR_1, ANGLE_SECTOR_2, ANGLE_SECTOR_3, ANGLE_SECTOR_4,
+					  ANGLE_SECTOR_5, ANGLE_SECTOR_6, ANGLE_SECTOR_7, ANGLE_SECTOR_8 };
+
+	sector_positions = { Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_4) ,
+						 Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_3) ,
+						 Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_2) ,
+						 Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_1) ,
+						 Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_1) ,
+						 Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_2) ,
+						 Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_3) ,
+						 Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_4) };
+
+	sector_rotations = { -ANGLE_SECTOR_1, -ANGLE_SECTOR_2, -ANGLE_SECTOR_3, -ANGLE_SECTOR_4,
+						 -ANGLE_SECTOR_5, -ANGLE_SECTOR_6, -ANGLE_SECTOR_7, -ANGLE_SECTOR_8 };
 
 	//add the touch event handler to the button
 	spin_button->addTouchEventListener(CC_CALLBACK_2(SpinnerScene::touchEvent, this));
@@ -140,8 +160,6 @@ void SpinnerScene::touchEvent(Ref* sender, Widget::TouchEventType type)
 //determine the reward and return the angle to spin to
 float SpinnerScene::getGoalAngle()
 {
-	float sector_angles[SECTOR_COUNT] = { ANGLE_SECTOR_1, ANGLE_SECTOR_2, ANGLE_SECTOR_3, ANGLE_SECTOR_4,
-										  ANGLE_SECTOR_5, ANGLE_SECTOR_6, ANGLE_SECTOR_7, ANGLE_SECTOR_8 };
 	//generate random int in [1,100]
 	int r_num = ((rand() / static_cast<float>(RAND_MAX)) * 100) + 1;
 
@@ -201,64 +219,32 @@ void SpinnerScene::addLabelWithQuantity(Sprite* sprite, string label_text)
 //emulate 1000 spins and group results by prize - output to file "1000spins.txt"
 void SpinnerScene::runSpinTest()
 {
-	int sector_1_count = 0;
-	int sector_2_count = 0;
-	int sector_3_count = 0;
-	int sector_4_count = 0;
-	int sector_5_count = 0;
-	int sector_6_count = 0;
-	int sector_7_count = 0;
-	int sector_8_count = 0;
-	int no_sector_count = 0;
+	vector<int> sim_results = { 0,0,0,0,0,0,0,0,0 };
 
 	for (int x = 0; x < 1000; x++)
 	{
 		getGoalAngle();
-		switch (last_reward)
+		if (last_reward != ERROR)
 		{
-		case 0:
-			sector_1_count++;
-			break;
-		case 1:
-			sector_2_count++;
-			break;
-		case 2:
-			sector_3_count++;
-			break;
-		case 3:
-			sector_4_count++;
-			break;
-		case 4:
-			sector_5_count++;
-			break;
-		case 5:
-			sector_6_count++;
-			break;
-		case 6:
-			sector_7_count++;
-			break;
-		case 7:
-			sector_8_count++;
-			break;
-		default:
-			no_sector_count++;
-			break;
+			sim_results.at(last_reward)++;
+			continue;
 		}
+		sim_results.at(8)++;
 	}
 
 	ofstream file;
 	file.open("../../1000spins.txt");
 	if (file)
 	{
-		file << "Sector 1: " << sector_1_count << endl;
-		file << "Sector 2: " << sector_2_count << endl;
-		file << "Sector 3: " << sector_3_count << endl;
-		file << "Sector 4: " << sector_4_count << endl;
-		file << "Sector 5: " << sector_5_count << endl;
-		file << "Sector 6: " << sector_6_count << endl;
-		file << "Sector 7: " << sector_7_count << endl;
-		file << "Sector 8: " << sector_8_count << endl;
-		file << "No sector: " << no_sector_count << endl;
+		file << "Sector 1: " << sim_results.at(0) << endl;
+		file << "Sector 2: " << sim_results.at(1) << endl;
+		file << "Sector 3: " << sim_results.at(2) << endl;
+		file << "Sector 4: " << sim_results.at(3) << endl;
+		file << "Sector 5: " << sim_results.at(4) << endl;
+		file << "Sector 6: " << sim_results.at(5) << endl;
+		file << "Sector 7: " << sim_results.at(6) << endl;
+		file << "Sector 8: " << sim_results.at(7) << endl;
+		file << "No sector: " << sim_results.at(8) << endl;
 		file.close();
 		log("unit test complete");
 	}
@@ -272,21 +258,6 @@ void SpinnerScene::runSpinTest()
 //add passed sprite to passed sector
 Sprite* SpinnerScene::addSectorSprite(string image, int sector)
 {
-	float wheel_width = sectors->getBoundingBox().size.width;
-	float wheel_height = sectors->getBoundingBox().size.height;
-
-	static Vec2 sector_positions[8] = { Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_4) ,
-										Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_3) ,
-										Vec2(wheel_width * CIRCLE_COORDS_4, wheel_height * CIRCLE_COORDS_2) ,
-										Vec2(wheel_width * CIRCLE_COORDS_3, wheel_height * CIRCLE_COORDS_1) ,
-										Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_1) ,
-										Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_2) ,
-										Vec2(wheel_width * CIRCLE_COORDS_1, wheel_height * CIRCLE_COORDS_3) ,
-										Vec2(wheel_width * CIRCLE_COORDS_2, wheel_height * CIRCLE_COORDS_4) };
-
-	static float sector_rotations[8] = { -ANGLE_SECTOR_1, -ANGLE_SECTOR_2, -ANGLE_SECTOR_3, -ANGLE_SECTOR_4,
-										 -ANGLE_SECTOR_5, -ANGLE_SECTOR_6, -ANGLE_SECTOR_7, -ANGLE_SECTOR_8 };
-
 	//create new sprite using image
 	auto new_sprite = Sprite::create(image);
 
@@ -333,7 +304,7 @@ void SpinnerScene::showRewardFunc()
 
 		//actions to bring reward sprite to front and center
 		reward_sprite->runAction(ScaleTo::create(TRANSITION_TIME_FAST, 2));
-		reward_sprite->runAction(MoveTo::create(TRANSITION_TIME_FAST, Vec2(Director::getInstance()->getVisibleSize().width / 2 + Director::getInstance()->getVisibleOrigin().x, Director::getInstance()->getVisibleSize().height / 2 + Director::getInstance()->getVisibleOrigin().y)));
+		reward_sprite->runAction(MoveTo::create(TRANSITION_TIME_FAST, Vec2(visible_size.width / 2 + origin.x, visible_size.height / 2 + origin.y)));
 	}
 }
 
@@ -368,4 +339,9 @@ void SpinnerScene::setChancesOf(int sector_num, int new_chances)
 	total_prob -= chances.at(sector_num);
 	chances.at(sector_num) = new_chances;
 	total_prob += new_chances;
+}
+
+void SpinnerScene::calcTotalProb()
+{
+	total_prob = accumulate(chances.begin(), chances.end(), 0);
 }

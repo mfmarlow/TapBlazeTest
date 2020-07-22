@@ -30,6 +30,10 @@ public:
 	void setChancesOf(int sector_num, int new_chances);
 
 private:
+	//location data
+	Vec2 origin;
+	Size visible_size;
+
 	//sprites
 	cocos2d::Sprite* sectors, *arrow, *border;
 	vector<Sprite*> sprites;
@@ -45,7 +49,12 @@ private:
 
 	//probabilities
 	vector<int> chances;
-	int total_prob = 100;
+	int total_prob;
+
+	//sector sprite data
+	vector<float> sector_angles;
+	vector<float> sector_rotations;
+	vector<Vec2> sector_positions;
 
 	//private methods
 	void touchEvent(Ref* sender, Widget::TouchEventType type);
@@ -56,6 +65,7 @@ private:
 	void populateSectors();
 	void showRewardFunc();
 	void replaceRewardFunc();
+	void calcTotalProb();
 
 	//private actions
 	ScaleTo* hide, * show;
