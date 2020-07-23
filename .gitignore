@@ -1,1 +1,4 @@
 TestGame/proj.android/app/.cxx/cmake/debug/armeabi-v7a/lib/libcocos2d.a
+TestGame/proj.win32/.vs
+TestGame/proj.win32/engine/cocos/core/cocos2d.dir/Debug/cmake_pch.pch
+TestGame/proj.win32/lib/Debug/cocos2d.lib

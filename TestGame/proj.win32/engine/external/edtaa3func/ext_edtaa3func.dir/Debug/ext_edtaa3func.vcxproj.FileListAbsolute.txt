@@ -1,0 +1,2 @@
+C:\Users\Matt\source\repos\TapBlazeTest\TestGame\proj.win32\lib\Debug\ext_edtaa3func.pdb
+C:\Users\Matt\source\repos\TapBlazeTest\TestGame\proj.win32\engine\external\edtaa3func\ext_edtaa3func.dir\Debug\ext_edtaa3func.pdb

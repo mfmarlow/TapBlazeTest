@@ -1,0 +1,26 @@
+﻿  Checking Build System
+  CMake is re-running because C:/Users/Matt/source/repos/TapBlazeTest/TestGame/proj.win32/CMakeFiles/generate.stamp is out-of-date.
+    the file 'C:/Users/Matt/source/repos/TapBlazeTest/TestGame/CMakeLists.txt'
+    is newer than 'C:/Users/Matt/source/repos/TapBlazeTest/TestGame/proj.win32/CMakeFiles/generate.stamp.depend'
+    result='-1'
+  -- Selecting Windows SDK version 10.0.18362.0 to target Windows 10.0.19041.
+  -- PROJECT_NAME:TestGame
+  -- PROJECT_SOURCE_DIR:C:/Users/Matt/source/repos/TapBlazeTest/TestGame
+  -- COCOS2DX_ROOT_PATH:C:/Users/Matt/source/repos/TapBlazeTest/TestGame/cocos2d
+  -- CMAKE_MODULE_PATH:C:/Users/Matt/source/repos/TapBlazeTest/TestGame/cocos2d/cmake/Modules/
+  -- PROJECT_BINARY_DIR:C:/Users/Matt/source/repos/TapBlazeTest/TestGame/proj.win32
+  -- ENGINE_BINARY_PATH:C:/Users/Matt/source/repos/TapBlazeTest/TestGame/proj.win32/engine
+  -- PYTHON_PATH:C:/Python27/python.exe
+  -- COCOS_COMMAND_PATH:C:/cocos2d-x-4.0/tools/cocos2d-console/bin/cocos
+  -- HOST_SYSTEM:Windows
+  -- CMAKE_GENERATOR: Visual Studio 16 2019
+  -- using Windows MSVC generate cocos2d-x project, MSVC_VERSION:1926
+  -- COCOS2DX_LUAJIT_ROOT:C:/cocos2d-x-4.0/tools/cocos2d-console/bin/../plugins/plugin_luacompile/bin
+  -- LUAJIT32_COMMAND:C:/cocos2d-x-4.0/tools/cocos2d-console/plugins/plugin_luacompile/bin/32bit/luajit-win32.exe
+  -- LUAJIT64_COMMAND:C:/cocos2d-x-4.0/tools/cocos2d-console/plugins/plugin_luacompile/bin/64bit/luajit-win32.exe
+  -- cocos_mark_code_files: cocos2d
+  CMake 3.16 target_precompile_headers
+  -- cocos_mark_code_files: TestGame
+  -- Configuring done
+  -- Generating done
+  -- Build files have been written to: C:/Users/Matt/source/repos/TapBlazeTest/TestGame/proj.win32

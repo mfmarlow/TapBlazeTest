@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\proj.win32\CMakeFiles\4086f60b95947d7047ecd823270da121\SYNC_RESOURCE-TestGame.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\proj.win32\CMakeFiles\SYNC_RESOURCE-TestGame" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{732FDFB5-10CD-37FC-9632-479F35D00C62}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

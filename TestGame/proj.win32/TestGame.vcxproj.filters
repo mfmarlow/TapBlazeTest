@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Classes\AppDelegate.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Classes\SpinnerScene.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Classes\MenuScene.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Classes\LiveTextField.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Classes\PrevScene.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\proj.win32\main.cpp">
+      <Filter>Source Files\proj.win32</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Classes\AppDelegate.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Classes\SpinnerScene.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Classes\MenuScene.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Classes\LiveTextField.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Classes\PrevScene.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\proj.win32\main.h">
+      <Filter>Source Files\proj.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\proj.win32\resource.h">
+      <Filter>Source Files\proj.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Resources\CloseNormal.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Resources\CloseSelected.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Resources\HelloWorld.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Resources\brush.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Resources\coin.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Resources\fonts\Marker Felt.ttf">
+      <Filter>Resources\fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Resources\fonts\arial.ttf">
+      <Filter>Resources\fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Resources\gem.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Resources\hammer.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Resources\heart.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Resources\res\.gitkeep">
+      <Filter>Resources\res</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Resources\spin_button.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Resources\wheel_arrow.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Resources\wheel_border.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\Resources\wheel_sections_8.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="C:\Users\Matt\source\repos\TapBlazeTest\TestGame\proj.win32\game.rc">
+      <Filter>Source Files\proj.win32</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{C932DE82-49D3-386D-BABF-CB11F21B79D3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\fonts">
+      <UniqueIdentifier>{0493C63B-0890-3DE7-B686-693CB9E8C5A2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\res">
+      <UniqueIdentifier>{FFD528F6-7589-3E5B-99AC-746138691013}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{46BF42A6-254D-3190-B1CE-06E65AA4F60B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes">
+      <UniqueIdentifier>{DE31B76C-80B9-3C8B-A957-CEE2D2E17189}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\proj.win32">
+      <UniqueIdentifier>{AA3FBBE9-0BE5-39D9-8801-8750BABA94EB}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
