@@ -1,8 +1,8 @@
-# Install script for directory: /home/matt/Desktop/TapBlazeTest/TestGame/cocos2d/cocos
+# Install script for directory: C:/Users/Matt/source/repos/TapBlazeTest/TestGame/cocos2d/cocos
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/usr/local")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/TestGame")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -29,7 +29,7 @@ endif()
 
 # Install shared libraries without execute permission?
 if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
-  set(CMAKE_INSTALL_SO_NO_EXE "1")
+  set(CMAKE_INSTALL_SO_NO_EXE "0")
 endif()
 
 # Is this installation the result of a crosscompile?
@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/matt/Desktop/TapBlazeTest/TestGame/proj.android/app/.cxx/cmake/debug/armeabi-v7a/engine/external/cmake_install.cmake")
+  include("C:/Users/Matt/source/repos/TapBlazeTest/TestGame/proj.android/app/.cxx/cmake/debug/armeabi-v7a/engine/external/cmake_install.cmake")
 
 endif()
 

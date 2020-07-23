@@ -31,9 +31,9 @@ bool MenuScene::init()
 	back_button->addTouchEventListener(CC_CALLBACK_2(MenuScene::touchEvent, this));
 
 	//warning text to appear if total_prob is not in [0,100]
-	warning = Label::createWithSystemFont("Total probability not in [0,100]", "Arial", 20);
+	warning = Label::createWithSystemFont("Total probability not in [0,100]", "Arial", 15);
 	warning->setColor(Color3B::RED);
-	warning->setPosition(Vec2(visible_size.width * 0.5 + origin.x, visible_size.height * 0.30 + origin.y));
+	warning->setPosition(Vec2(visible_size.width * 0.5 + origin.x, visible_size.height * 0.10 + origin.y));
 	warning->setOpacity(0);
 	this->addChild(warning, 0);
 

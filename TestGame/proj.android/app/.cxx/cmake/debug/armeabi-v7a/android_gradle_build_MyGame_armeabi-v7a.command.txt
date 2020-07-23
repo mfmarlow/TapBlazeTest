@@ -1,7 +1,7 @@
-Executable : /home/matt/Android/Sdk/cmake/3.10.2.4988404/bin/ninja
+Executable : C:\Users\Matt\AppData\Local\Android\Sdk\cmake\3.10.2.4988404\bin\ninja.exe
 arguments : 
 -C
-/home/matt/Desktop/TapBlazeTest/TestGame/proj.android/app/.cxx/cmake/debug/armeabi-v7a
+C:\Users\Matt\source\repos\TapBlazeTest\TestGame\proj.android\app\.cxx\cmake\debug\armeabi-v7a
 MyGame
 jvmArgs : 
 
